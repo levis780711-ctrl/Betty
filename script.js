@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         experience: {
             normalPrice: 1480,
             couponPrice: 640,
-            originalNormal: 1980,
+            originalNormal: 1480,
             originalCoupon: 1480,
             name: "【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)",
             shortLabel: "體驗組 (1管)",
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popular: {
             normalPrice: 2860,
             couponPrice: 1180,
-            originalNormal: 3960,
+            originalNormal: 2860,
             originalCoupon: 2860,
             name: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
             shortLabel: "熱銷組 (2管)",
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stockpile: {
             normalPrice: 8380,
             couponPrice: 3340,
-            originalNormal: 11880,
+            originalNormal: 8380,
             originalCoupon: 8380,
             name: "【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)",
             shortLabel: "囤貨組 (6管)",
@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (origSpan) {
                     origSpan.textContent = `原價 NT$ ${config.originalCoupon.toLocaleString('en-US')}`;
                     origSpan.style.textDecoration = 'line-through';
+                    origSpan.style.display = 'inline';
                 }
                 if (priceSpan) {
                     priceSpan.textContent = config.couponPrice.toLocaleString('en-US');
@@ -197,14 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 card.classList.add('discount-active');
                 if (planId === 'popular') {
-                    badge.textContent = `熱銷首選 (現省$2780)`;
+                    badge.textContent = `熱銷首選 (現省$1,680)`;
                 } else if (planId === 'stockpile') {
-                    badge.textContent = `超值囤貨 (現省$8540)`;
+                    badge.textContent = `超值囤貨 (現省$5,040)`;
                 }
             } else {
                 if (origSpan) {
-                    origSpan.textContent = `原價 NT$ ${config.originalNormal.toLocaleString('en-US')}`;
-                    origSpan.style.textDecoration = 'line-through';
+                    origSpan.style.display = 'none';
                 }
                 if (priceSpan) {
                     priceSpan.textContent = config.normalPrice.toLocaleString('en-US');
@@ -214,9 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 card.classList.remove('discount-active');
                 if (planId === 'popular') {
-                    badge.textContent = `熱銷首選 (現省$1100)`;
+                    badge.textContent = `熱銷首選`;
                 } else if (planId === 'stockpile') {
-                    badge.textContent = `超值囤貨 (現省$3500)`;
+                    badge.textContent = `超值囤貨`;
                 }
             }
         });
