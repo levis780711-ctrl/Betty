@@ -109,6 +109,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     // PLAN SELECTION LOGIC
     // ==========================================================================
+    // Pricing configurations
+    const planConfigs = {
+        experience: {
+            normalPrice: 1480,
+            couponPrice: 640,
+            originalNormal: 1980,
+            originalCoupon: 1480,
+            name: "【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)",
+            shortLabel: "體驗組 (1管)",
+            avgNormal: 1480,
+            avgCoupon: 640
+        },
+        popular: {
+            normalPrice: 2860,
+            couponPrice: 1180,
+            originalNormal: 3960,
+            originalCoupon: 2860,
+            name: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
+            shortLabel: "熱銷組 (2管)",
+            avgNormal: 1430,
+            avgCoupon: 590
+        },
+        stockpile: {
+            normalPrice: 8380,
+            couponPrice: 3340,
+            originalNormal: 11880,
+            originalCoupon: 8380,
+            name: "【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)",
+            shortLabel: "囤貨組 (6管)",
+            avgNormal: 1397,
+            avgCoupon: 557
+        }
+    };
+
+    let isCouponApplied = false;
+
     function selectPlan(cardElement) {
         // Remove active class from all cards
         planCards.forEach(c => c.classList.remove('active'));
@@ -118,28 +154,78 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Read data attributes
         const planId = cardElement.getAttribute('data-plan');
-        const planPrice = cardElement.getAttribute('data-price');
-        const planName = cardElement.getAttribute('data-name');
+        const config = planConfigs[planId];
+        const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
         
         // Update hidden inputs
         hiddenPlanId.value = planId;
-        hiddenPlanName.value = planName;
-        hiddenPlanPrice.value = planPrice;
+        hiddenPlanName.value = config.name;
+        hiddenPlanPrice.value = finalPrice;
         
         // Format price with comma
-        const formattedPrice = Number(planPrice).toLocaleString('en-US');
+        const formattedPrice = finalPrice.toLocaleString('en-US');
         
         // Update Order Summary
-        summaryProductName.textContent = planName;
+        summaryProductName.textContent = config.name;
         summaryTotalPrice.textContent = formattedPrice;
         
         // Update Sticky bottom bar info
-        let shortLabel = "體驗組 (1管)";
-        if (planId === 'popular') shortLabel = "熱銷組 (3管)";
-        if (planId === 'stockpile') shortLabel = "囤貨組 (6管)";
-        
-        stickyPlanLabel.textContent = shortLabel;
+        stickyPlanLabel.textContent = config.shortLabel;
         stickyPriceLabel.textContent = `NT$ ${formattedPrice}`;
+    }
+
+    function updatePricingUI() {
+        planCards.forEach(card => {
+            const planId = card.getAttribute('data-plan');
+            const config = planConfigs[planId];
+            
+            const origSpan = card.querySelector('.original-price');
+            const priceSpan = card.querySelector('.price .num');
+            const avgSpan = card.querySelector('.plan-features span');
+            const badge = card.querySelector('.plan-badge');
+
+            if (isCouponApplied) {
+                if (origSpan) {
+                    origSpan.textContent = `原價 NT$ ${config.originalCoupon.toLocaleString('en-US')}`;
+                    origSpan.style.textDecoration = 'line-through';
+                }
+                if (priceSpan) {
+                    priceSpan.textContent = config.couponPrice.toLocaleString('en-US');
+                }
+                if (avgSpan) {
+                    avgSpan.textContent = config.avgCoupon.toLocaleString('en-US');
+                }
+                card.classList.add('discount-active');
+                if (planId === 'popular') {
+                    badge.textContent = `熱銷首選 (現省$2780)`;
+                } else if (planId === 'stockpile') {
+                    badge.textContent = `超值囤貨 (現省$8540)`;
+                }
+            } else {
+                if (origSpan) {
+                    origSpan.textContent = `原價 NT$ ${config.originalNormal.toLocaleString('en-US')}`;
+                    origSpan.style.textDecoration = 'line-through';
+                }
+                if (priceSpan) {
+                    priceSpan.textContent = config.normalPrice.toLocaleString('en-US');
+                }
+                if (avgSpan) {
+                    avgSpan.textContent = config.avgNormal.toLocaleString('en-US');
+                }
+                card.classList.remove('discount-active');
+                if (planId === 'popular') {
+                    badge.textContent = `熱銷首選 (現省$1100)`;
+                } else if (planId === 'stockpile') {
+                    badge.textContent = `超值囤貨 (現省$3500)`;
+                }
+            }
+        });
+
+        // Update active card selections
+        const activeCard = document.querySelector('.plan-card.active');
+        if (activeCard) {
+            selectPlan(activeCard);
+        }
     }
 
     // Set click handlers on cards
@@ -151,6 +237,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize with Featured plan (Popular / index 1)
     selectPlan(planCards[1]);
+
+    // Coupon Code handlers
+    const couponInput = document.getElementById('coupon-code');
+    const applyCouponBtn = document.getElementById('apply-coupon-btn');
+    const couponMsg = document.getElementById('coupon-msg');
+
+    applyCouponBtn.addEventListener('click', () => {
+        const code = couponInput.value.trim();
+        if (code === '000491') {
+            isCouponApplied = true;
+            couponMsg.textContent = '已成功套用優惠碼 000491，價格已折抵！';
+            couponMsg.className = 'coupon-message success';
+            updatePricingUI();
+        } else if (code === '') {
+            isCouponApplied = false;
+            couponMsg.textContent = '';
+            couponMsg.className = 'coupon-message';
+            updatePricingUI();
+        } else {
+            isCouponApplied = false;
+            couponMsg.textContent = '優惠碼無效';
+            couponMsg.className = 'coupon-message error';
+            updatePricingUI();
+        }
+    });
+
+    couponInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            applyCouponBtn.click();
+        }
+    });
 
     // ==========================================================================
     // DYNAMIC SHIPPING & PAYMENT FIELDS
@@ -361,6 +479,13 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fa-solid fa-lock"></i> 安全結帳，確認送出訂單';
             orderForm.reset();
+            
+            // Reset coupon state
+            isCouponApplied = false;
+            couponInput.value = '';
+            couponMsg.textContent = '';
+            couponMsg.className = 'coupon-message';
+            updatePricingUI();
             
             // Reset to default featured plan
             selectPlan(planCards[1]);

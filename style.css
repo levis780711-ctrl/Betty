@@ -295,6 +295,24 @@ main {
     box-shadow: 0 10px 25px rgba(212, 77, 50, 0.12);
 }
 
+.plan-card.discount-active {
+    border-color: rgba(45, 138, 78, 0.3);
+}
+
+.plan-card.discount-active.active {
+    border-color: var(--color-success);
+    background: #f1f9f5;
+    box-shadow: 0 10px 25px rgba(45, 138, 78, 0.12);
+}
+
+.plan-card.discount-active .price {
+    color: var(--color-success);
+}
+
+.plan-card.discount-active .plan-badge {
+    background-color: var(--color-success) !important;
+}
+
 .plan-badge {
     position: absolute;
     top: -12px;
@@ -673,6 +691,83 @@ main {
     font-size: 1.4rem;
     font-weight: 800;
     color: var(--color-primary);
+}
+
+/* Coupon Section */
+.coupon-section {
+    margin-bottom: 24px;
+    background: #fff;
+    border: 1px solid rgba(212, 77, 50, 0.1);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.coupon-section label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-dark);
+}
+
+.coupon-section label i {
+    color: var(--color-primary);
+    margin-right: 4px;
+}
+
+.coupon-input-wrap {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-input-wrap input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid rgba(212, 77, 50, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    transition: all 0.2s ease;
+}
+
+.coupon-input-wrap input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 77, 50, 0.1);
+}
+
+.coupon-input-wrap button {
+    padding: 0 20px;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.coupon-input-wrap button:hover {
+    background-color: var(--color-primary);
+}
+
+.coupon-message {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.coupon-message.success {
+    color: #2e7d32;
+}
+
+.coupon-message.error {
+    color: #c62828;
 }
 
 /* Submit Button & Badges */

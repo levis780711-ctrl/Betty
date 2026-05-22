@@ -123,52 +123,52 @@
                 <!-- 1. Product Plan Selection Cards -->
                 <div class="plan-cards-grid" id="plan-selector">
                     <!-- Plan 1 -->
-                    <div class="plan-card" data-plan="experience" data-price="499" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
+                    <div class="plan-card" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
                         <div class="plan-badge">入門首選</div>
                         <h3 class="plan-name">體驗組</h3>
                         <p class="plan-qty">1管 (共14錠)</p>
                         <div class="plan-price-block">
-                            <span class="original-price">原價 NT$ 599</span>
-                            <span class="price">NT$ <span class="num">499</span></span>
+                            <span class="original-price" id="orig-exp">原價 NT$ 1,980</span>
+                            <span class="price">NT$ <span class="num" id="price-exp">1,480</span></span>
                         </div>
                         <ul class="plan-features">
                             <li><i class="fa-solid fa-circle-check"></i> 適合首次開箱體驗</li>
                             <li><i class="fa-solid fa-circle-check"></i> 隨身攜帶，無負擔嘗試</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 499 / 管</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-exp">1,480</span> / 管</li>
                         </ul>
                         <button type="button" class="select-plan-btn">選擇此方案</button>
                     </div>
 
                     <!-- Plan 2 (Featured) -->
-                    <div class="plan-card featured" data-plan="popular" data-price="1280" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (3管/42錠)">
-                        <div class="plan-badge">熱銷首選 (現省$517)</div>
+                    <div class="plan-card featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
+                        <div class="plan-badge" id="badge-pop">熱銷首選 (現省$1100)</div>
                         <h3 class="plan-name">熱銷組</h3>
-                        <p class="plan-qty">3管 (共42錠)</p>
+                        <p class="plan-qty">2管 (共28錠)</p>
                         <div class="plan-price-block">
-                            <span class="original-price">原價 NT$ 1,797</span>
-                            <span class="price">NT$ <span class="num">1,280</span></span>
+                            <span class="original-price" id="orig-pop">原價 NT$ 3,960</span>
+                            <span class="price">NT$ <span class="num" id="price-pop">2,860</span></span>
                         </div>
                         <ul class="plan-features">
-                            <li><i class="fa-solid fa-circle-check"></i> 85折優惠！日常體態管理</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
                             <li><i class="fa-solid fa-circle-check"></i> 完整週期，餐前解膩有感</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 426 / 管</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-pop">1,430</span> / 管</li>
                         </ul>
                         <button type="button" class="select-plan-btn">選擇此方案</button>
                     </div>
 
                     <!-- Plan 3 -->
-                    <div class="plan-card" data-plan="stockpile" data-price="2280" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
-                        <div class="plan-badge">超值囤貨 (現省$1314)</div>
+                    <div class="plan-card" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
+                        <div class="plan-badge" id="badge-stk">超值囤貨 (現省$3500)</div>
                         <h3 class="plan-name">囤貨組</h3>
                         <p class="plan-qty">6管 (共84錠)</p>
                         <div class="plan-price-block">
-                            <span class="original-price">原價 NT$ 3,594</span>
-                            <span class="price">NT$ <span class="num">2,280</span></span>
+                            <span class="original-price" id="orig-stk">原價 NT$ 11,880</span>
+                            <span class="price">NT$ <span class="num" id="price-stk">8,380</span></span>
                         </div>
                         <ul class="plan-features">
-                            <li><i class="fa-solid fa-circle-check"></i> 63折大優惠！長效常備</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 全家分享，性價比最高</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 380 / 管</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 長效常備，全家分享</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 性價比最高，現省最多</li>
+                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-stk">1,397</span> / 管</li>
                         </ul>
                         <button type="button" class="select-plan-btn">選擇此方案</button>
                     </div>
@@ -179,8 +179,8 @@
                     <form id="order-form" novalidate>
                         <!-- Hidden fields to store current selection info -->
                         <input type="hidden" id="selected-plan-id" name="plan_id" value="popular">
-                        <input type="hidden" id="selected-plan-name" name="plan_name" value="【熱銷組】不油自主 BÜLIO 油切發泡錠 (3管/42錠)">
-                        <input type="hidden" id="selected-plan-price" name="plan_price" value="1280">
+                        <input type="hidden" id="selected-plan-name" name="plan_name" value="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
+                        <input type="hidden" id="selected-plan-price" name="plan_price" value="2860">
 
                         <div class="form-grid">
                             
@@ -318,12 +318,22 @@
                                     <textarea id="customer-notes" name="notes" placeholder="若有特殊收件需求請在此註記..." rows="3"></textarea>
                                 </div>
 
+                                <!-- Coupon Input Box -->
+                                <div class="coupon-section">
+                                    <label for="coupon-code"><i class="fa-solid fa-ticket"></i> 使用優惠折扣碼</label>
+                                    <div class="coupon-input-wrap">
+                                        <input type="text" id="coupon-code" placeholder="請輸入優惠碼" autocomplete="off">
+                                        <button type="button" id="apply-coupon-btn">套用</button>
+                                    </div>
+                                    <span class="coupon-message" id="coupon-msg"></span>
+                                </div>
+
                                 <!-- Order Summary Box -->
                                 <div class="order-summary-box">
                                     <h4 class="summary-title">訂單明細</h4>
                                     <div class="summary-row">
                                         <span class="summary-label">已選商品：</span>
-                                        <span class="summary-val" id="summary-product-name">【熱銷組】不油自主 BÜLIO 油切發泡錠 (3管/42錠)</span>
+                                        <span class="summary-val" id="summary-product-name">【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)</span>
                                     </div>
                                     <div class="summary-row">
                                         <span class="summary-label">運費：</span>
@@ -332,7 +342,7 @@
                                     <hr class="summary-divider">
                                     <div class="summary-row total-row">
                                         <span class="summary-label">應付總金額：</span>
-                                        <span class="summary-val total-price">NT$ <span id="summary-total-price">1,280</span></span>
+                                        <span class="summary-val total-price">NT$ <span id="summary-total-price">2,860</span></span>
                                     </div>
                                 </div>
 
@@ -390,8 +400,8 @@
     <div class="sticky-cta-bar" id="sticky-cta-bar">
         <div class="sticky-cta-container">
             <div class="sticky-info">
-                <span class="sticky-plan-label" id="sticky-plan-label">熱銷組 (3管)</span>
-                <span class="sticky-price" id="sticky-price-label">NT$ 1,280</span>
+                <span class="sticky-plan-label" id="sticky-plan-label">熱銷組 (2管)</span>
+                <span class="sticky-price" id="sticky-price-label">NT$ 2,860</span>
             </div>
             <a href="#checkout-section" class="sticky-btn" id="sticky-checkout-trigger">
                 <span>立即搶購</span>
@@ -413,8 +423,8 @@
                 <h4>訂單明細</h4>
                 <ul class="receipt-list">
                     <li><strong>訂單編號：</strong> <span id="receipt-order-id">BL202605210001</span></li>
-                    <li><strong>訂購方案：</strong> <span id="receipt-plan">【熱銷組】不油自主 BÜLIO 油切發泡錠 (3管)</span></li>
-                    <li><strong>應付金額：</strong> <span id="receipt-total" class="highlight-total">NT$ 1,280</span></li>
+                    <li><strong>訂購方案：</strong> <span id="receipt-plan">【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)</span></li>
+                    <li><strong>應付金額：</strong> <span id="receipt-total" class="highlight-total">NT$ 2,860</span></li>
                     <li><strong>收件姓名：</strong> <span id="receipt-name">王小明</span></li>
                     <li><strong>聯絡電話：</strong> <span id="receipt-phone">0912-345-678</span></li>
                     <li><strong>配送地址/門市：</strong> <span id="receipt-address">台北市信義區忠孝東路五段100號</span></li>
