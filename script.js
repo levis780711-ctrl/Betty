@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
     
-    const planCards = document.querySelectorAll('.plan-card');
+    // New image-based plan cards
+    const planCards = document.querySelectorAll('.plan-card-v2');
     
     // Sticky bottom bar
     const stickyCtaBar = document.getElementById('sticky-cta-bar');
@@ -18,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================================================
     // MOBILE NAVIGATION
     // ==========================================================================
-    // Toggle Mobile Menu
     if (mobileMenuToggle && mobileNavOverlay) {
         mobileMenuToggle.addEventListener('click', () => {
             const isOpen = mobileNavOverlay.classList.contains('open');
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close mobile menu on nav link click
     mobileNavLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (mobileNavOverlay) mobileNavOverlay.classList.remove('open');
@@ -61,8 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const heroHeight = heroSection.offsetHeight;
             const checkoutOffsetTop = checkoutSection.offsetTop;
             
-            // Show sticky bar only after scrolling past the first section,
-            // and hide it when the user reaches the checkout section
             if (window.scrollY > heroHeight && window.scrollY < (checkoutOffsetTop - 200)) {
                 stickyCtaBar.classList.add('visible');
             } else {
@@ -72,113 +69,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // PLAN SELECTION LOGIC
+    // PLAN SELECTION LOGIC (Image-based Cards)
     // ==========================================================================
-    // Pricing configurations
     const planConfigs = {
         experience: {
             normalPrice: 1480,
             couponPrice: 640,
-            originalNormal: 1480,
-            originalCoupon: 1480,
             name: "【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)",
-            shortLabel: "體驗組 (1管)",
-            avgNormal: 1480,
-            avgCoupon: 640
+            shortLabel: "體驗組 (1管)"
         },
         popular: {
             normalPrice: 2860,
             couponPrice: 1180,
-            originalNormal: 2860,
-            originalCoupon: 2860,
             name: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
-            shortLabel: "熱銷組 (2管)",
-            avgNormal: 1430,
-            avgCoupon: 590
+            shortLabel: "熱銷組 (2管)"
         },
         stockpile: {
             normalPrice: 8380,
             couponPrice: 3340,
-            originalNormal: 8380,
-            originalCoupon: 8380,
             name: "【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)",
-            shortLabel: "囤貨組 (6管)",
-            avgNormal: 1397,
-            avgCoupon: 557
+            shortLabel: "囤貨組 (6管)"
         }
     };
 
     let isCouponApplied = false;
 
     function selectPlan(cardElement) {
-        // Remove active class from all cards
         planCards.forEach(c => c.classList.remove('active'));
-        
-        // Add active class to clicked card
         cardElement.classList.add('active');
         
-        // Read data attributes
         const planId = cardElement.getAttribute('data-plan');
         const config = planConfigs[planId];
         const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
-        
-        // Format price with comma
         const formattedPrice = finalPrice.toLocaleString('en-US');
         
-        // Update Sticky bottom bar info
         if (stickyPlanLabel) stickyPlanLabel.textContent = config.shortLabel;
         if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${formattedPrice}`;
     }
 
-    function updatePricingUI() {
-        planCards.forEach(card => {
-            const planId = card.getAttribute('data-plan');
-            const config = planConfigs[planId];
-            
-            const origSpan = card.querySelector('.original-price');
-            const priceSpan = card.querySelector('.price .num');
-            const avgSpan = card.querySelector('.plan-features span');
-            const badge = card.querySelector('.plan-badge');
+    function updateDiscountOverlays() {
+        const overlayIds = {
+            experience: 'disc-exp',
+            popular: 'disc-pop',
+            stockpile: 'disc-stk'
+        };
 
-            if (isCouponApplied) {
-                if (origSpan) {
-                    origSpan.textContent = `原價 NT$ ${config.originalCoupon.toLocaleString('en-US')}`;
-                    origSpan.style.textDecoration = 'line-through';
-                    origSpan.style.display = 'inline';
-                }
-                if (priceSpan) {
-                    priceSpan.textContent = config.couponPrice.toLocaleString('en-US');
-                }
-                if (avgSpan) {
-                    avgSpan.textContent = config.avgCoupon.toLocaleString('en-US');
-                }
-                card.classList.add('discount-active');
-                if (planId === 'popular') {
-                    badge.textContent = `熱銷首選 (現省$1,680)`;
-                } else if (planId === 'stockpile') {
-                    badge.textContent = `超值囤貨 (現省$5,040)`;
-                }
-            } else {
-                if (origSpan) {
-                    origSpan.style.display = 'none';
-                }
-                if (priceSpan) {
-                    priceSpan.textContent = config.normalPrice.toLocaleString('en-US');
-                }
-                if (avgSpan) {
-                    avgSpan.textContent = config.avgNormal.toLocaleString('en-US');
-                }
-                card.classList.remove('discount-active');
-                if (planId === 'popular') {
-                    badge.textContent = `熱銷首選`;
-                } else if (planId === 'stockpile') {
-                    badge.textContent = `超值囤貨`;
+        Object.keys(overlayIds).forEach(planId => {
+            const overlay = document.getElementById(overlayIds[planId]);
+            if (overlay) {
+                if (isCouponApplied) {
+                    overlay.classList.add('visible');
+                } else {
+                    overlay.classList.remove('visible');
                 }
             }
         });
 
-        // Update active card selections
-        const activeCard = document.querySelector('.plan-card.active');
+        // Update active card sticky bar price
+        const activeCard = document.querySelector('.plan-card-v2.active');
         if (activeCard) {
             selectPlan(activeCard);
         }
@@ -196,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selectPlan(planCards[1]);
     }
 
-    // Coupon Code handlers
+    // ==========================================================================
+    // COUPON CODE HANDLERS
+    // ==========================================================================
     const couponInput = document.getElementById('coupon-code');
     const applyCouponBtn = document.getElementById('apply-coupon-btn');
     const couponMsg = document.getElementById('coupon-msg');
@@ -211,21 +161,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     couponMsg.textContent = '已成功套用優惠碼 000491，價格已折抵！';
                     couponMsg.className = 'coupon-message success';
                 }
-                updatePricingUI();
+                updateDiscountOverlays();
             } else if (code === '') {
                 isCouponApplied = false;
                 if (couponMsg) {
                     couponMsg.textContent = '';
                     couponMsg.className = 'coupon-message';
                 }
-                updatePricingUI();
+                updateDiscountOverlays();
             } else {
                 isCouponApplied = false;
                 if (couponMsg) {
                     couponMsg.textContent = '優惠碼無效';
                     couponMsg.className = 'coupon-message error';
                 }
-                updatePricingUI();
+                updateDiscountOverlays();
             }
         });
 
@@ -243,4 +193,111 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // ==========================================================================
+    // SOCIAL PROOF NOTIFICATION SYSTEM
+    // ==========================================================================
+    const toast = document.getElementById('social-proof-toast');
+    const toastBuyer = document.getElementById('toast-buyer');
+    const toastAction = document.getElementById('toast-action');
+    const toastTime = document.getElementById('toast-time');
+    const toastClose = document.getElementById('toast-close');
+
+    const cities = [
+        '台北', '新北', '桃園', '台中', '台南', '高雄',
+        '新竹', '嘉義', '彰化', '屏東', '宜蘭', '花蓮',
+        '基隆', '苗栗', '南投', '雲林', '台東', '澎湖'
+    ];
+
+    const lastNames = [
+        '陳', '林', '黃', '張', '李', '王', '吳', '劉',
+        '蔡', '楊', '許', '鄭', '謝', '郭', '洪', '曾',
+        '邱', '廖', '賴', '周', '徐', '蘇', '葉', '莊'
+    ];
+
+    const firstNameChars = [
+        '萱', '芳', '婷', '雅', '惠', '玲', '怡', '君',
+        '蓉', '琪', '庭', '瑜', '欣', '宜', '佳', '真',
+        '珊', '筠', '涵', '晴', '霖', '翔', '宇', '傑',
+        '明', '豪', '偉', '志', '文', '威', '軒', '瑋'
+    ];
+
+    const plans = [
+        { name: '體驗組', qty: '1管' },
+        { name: '熱銷組', qty: '2管' },
+        { name: '囤貨組', qty: '6管' }
+    ];
+
+    // Weighted random — Popular and Experience appear more often
+    const planWeights = [3, 5, 2]; // experience: 30%, popular: 50%, stockpile: 20%
+
+    function getWeightedPlan() {
+        const totalWeight = planWeights.reduce((a, b) => a + b, 0);
+        let random = Math.random() * totalWeight;
+        for (let i = 0; i < plans.length; i++) {
+            random -= planWeights[i];
+            if (random <= 0) return plans[i];
+        }
+        return plans[1]; // fallback to popular
+    }
+
+    function generateNotification() {
+        const city = cities[Math.floor(Math.random() * cities.length)];
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+        const firstName = firstNameChars[Math.floor(Math.random() * firstNameChars.length)];
+        const plan = getWeightedPlan();
+        const minutesAgo = Math.floor(Math.random() * 15) + 1;
+
+        return {
+            buyer: `${city} ${lastName}Ｏ${firstName}`,
+            action: `剛剛購買了 <strong>${plan.name}</strong>`,
+            time: `${minutesAgo} 分鐘前`
+        };
+    }
+
+    let toastTimer = null;
+    let isToastPaused = false;
+
+    function showToast() {
+        if (!toast || isToastPaused) return;
+
+        const notif = generateNotification();
+        if (toastBuyer) toastBuyer.textContent = notif.buyer;
+        if (toastAction) toastAction.innerHTML = notif.action;
+        if (toastTime) toastTime.textContent = notif.time;
+
+        toast.classList.add('visible');
+
+        // Hide after 4 seconds
+        setTimeout(() => {
+            toast.classList.remove('visible');
+        }, 4000);
+    }
+
+    function startToastCycle() {
+        // First notification after 8 seconds
+        toastTimer = setTimeout(() => {
+            showToast();
+            // Then repeat every 12-18 seconds
+            toastTimer = setInterval(() => {
+                showToast();
+            }, 12000 + Math.random() * 6000);
+        }, 8000);
+    }
+
+    // Close button pauses notifications for this session
+    if (toastClose) {
+        toastClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toast.classList.remove('visible');
+            isToastPaused = true;
+            if (toastTimer) {
+                clearInterval(toastTimer);
+                clearTimeout(toastTimer);
+            }
+        });
+    }
+
+    // Start the notification cycle
+    startToastCycle();
 });

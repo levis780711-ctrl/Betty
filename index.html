@@ -134,57 +134,60 @@
                     <span class="coupon-message" id="coupon-msg"></span>
                 </div>
 
-                <!-- 1. Product Plan Selection Cards -->
-                <div class="plan-cards-grid" id="plan-selector">
-                    <!-- Plan 1 -->
-                    <div class="plan-card" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
-                        <div class="plan-badge">入門首選</div>
-                        <h3 class="plan-name">體驗組</h3>
-                        <p class="plan-qty">1管 (共14錠)</p>
-                        <div class="plan-price-block">
-                            <span class="original-price" id="orig-exp" style="display: none;">原價 NT$ 1,480</span>
-                            <span class="price">NT$ <span class="num" id="price-exp">1,480</span></span>
+                <!-- Image-based Plan Cards -->
+                <div class="plan-cards-v2" id="plan-selector">
+                    <!-- Plan 1: Experience -->
+                    <div class="plan-card-v2" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
+                        <div class="card-img-wrap">
+                            <img src="plan-experience.jpg" alt="體驗組 - 1管14錠，入門首選 NT$1,480" class="card-img" loading="lazy">
+                            <div class="discount-overlay" id="disc-exp">
+                                <div class="disc-content">
+                                    <span class="disc-tag"><i class="fa-solid fa-tag"></i> 優惠碼已折抵</span>
+                                    <span class="disc-old">NT$ 1,480</span>
+                                    <span class="disc-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    <span class="disc-new">NT$ <span id="price-exp">640</span></span>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-circle-check"></i> 適合首次開箱體驗</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 隨身攜帶，無負擔嘗試</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-exp">1,480</span> / 管</li>
-                        </ul>
-                        <button type="button" class="select-plan-btn">選擇此方案</button>
+                        <div class="card-select-indicator">
+                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
+                        </div>
                     </div>
 
-                    <!-- Plan 2 (Featured) -->
-                    <div class="plan-card featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
-                        <div class="plan-badge" id="badge-pop">熱銷首選</div>
-                        <h3 class="plan-name">熱銷組</h3>
-                        <p class="plan-qty">2管 (共28錠)</p>
-                        <div class="plan-price-block">
-                            <span class="original-price" id="orig-pop" style="display: none;">原價 NT$ 2,860</span>
-                            <span class="price">NT$ <span class="num" id="price-pop">2,860</span></span>
+                    <!-- Plan 2: Popular (Featured) -->
+                    <div class="plan-card-v2 featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
+                        <div class="card-img-wrap">
+                            <img src="plan-popular.jpg" alt="熱銷組 - 2管28錠，熱銷首選 NT$2,860" class="card-img" loading="lazy">
+                            <div class="discount-overlay" id="disc-pop">
+                                <div class="disc-content">
+                                    <span class="disc-tag"><i class="fa-solid fa-tag"></i> 優惠碼已折抵</span>
+                                    <span class="disc-old">NT$ 2,860</span>
+                                    <span class="disc-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    <span class="disc-new">NT$ <span id="price-pop">1,180</span></span>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-pop">1,430</span> / 管</li>
-                        </ul>
-                        <button type="button" class="select-plan-btn">選擇此方案</button>
+                        <div class="card-select-indicator">
+                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
+                        </div>
                     </div>
 
-                    <!-- Plan 3 -->
-                    <div class="plan-card" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
-                        <div class="plan-badge" id="badge-stk">超值囤貨</div>
-                        <h3 class="plan-name">囤貨組</h3>
-                        <p class="plan-qty">6管 (共84錠)</p>
-                        <div class="plan-price-block">
-                            <span class="original-price" id="orig-stk" style="display: none;">原價 NT$ 8,380</span>
-                            <span class="price">NT$ <span class="num" id="price-stk">8,380</span></span>
+                    <!-- Plan 3: Stockpile -->
+                    <div class="plan-card-v2" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
+                        <div class="card-img-wrap">
+                            <img src="plan-stockpile.jpg" alt="囤貨組 - 6管84錠，超值囤貨 NT$8,380" class="card-img" loading="lazy">
+                            <div class="discount-overlay" id="disc-stk">
+                                <div class="disc-content">
+                                    <span class="disc-tag"><i class="fa-solid fa-tag"></i> 優惠碼已折抵</span>
+                                    <span class="disc-old">NT$ 8,380</span>
+                                    <span class="disc-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    <span class="disc-new">NT$ <span id="price-stk">3,340</span></span>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="plan-features">
-                            <li><i class="fa-solid fa-circle-check"></i> 長效常備，全家分享</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 性價比最高，現省最多</li>
-                            <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ <span id="avg-stk">1,397</span> / 管</li>
-                        </ul>
-                        <button type="button" class="select-plan-btn">選擇此方案</button>
+                        <div class="card-select-indicator">
+                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,6 +240,21 @@
         </div>
     </div>
 
+
+    <!-- Social Proof Notification Toast -->
+    <div class="social-proof-toast" id="social-proof-toast">
+        <div class="toast-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <div class="toast-body">
+            <p class="toast-buyer" id="toast-buyer">台北 林Ｏ芳</p>
+            <p class="toast-action" id="toast-action">剛剛購買了 <strong>熱銷組</strong></p>
+            <p class="toast-time" id="toast-time">2 分鐘前</p>
+        </div>
+        <button class="toast-close" id="toast-close" aria-label="關閉通知">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
 
     <!-- JS Logic -->
     <script src="script.js"></script>
