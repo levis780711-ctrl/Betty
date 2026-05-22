@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const couponInput = document.getElementById('coupon-code');
     const applyCouponBtn = document.getElementById('apply-coupon-btn');
     const couponMsg = document.getElementById('coupon-msg');
+    const promoCodeClick = document.getElementById('promo-code-click');
 
     if (applyCouponBtn && couponInput) {
         applyCouponBtn.addEventListener('click', () => {
@@ -234,5 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 applyCouponBtn.click();
             }
         });
+
+        if (promoCodeClick) {
+            promoCodeClick.addEventListener('click', () => {
+                couponInput.value = '000491';
+                applyCouponBtn.click();
+            });
+        }
     }
 });
