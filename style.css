@@ -265,10 +265,18 @@ main {
 
 /* ---- New Image-based Plan Cards ---- */
 .plan-cards-v2 {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 15px 20px;
     margin-bottom: 20px;
+    scroll-padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.plan-cards-v2::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
 .plan-card-v2 {
@@ -279,6 +287,9 @@ main {
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: var(--shadow-sm);
     border: 3px solid transparent;
+    flex: 0 0 280px; /* Fixed width on mobile for horizontal scroll */
+    scroll-snap-align: start;
+    container-type: inline-size; /* Enable container query font scaling! */
 }
 
 .plan-card-v2:hover {
@@ -334,87 +345,88 @@ main {
     gap: 6px;
 }
 
-/* Price Overlay - Covering the baked-in static price on the card images */
-.price-overlay {
+/* Price strike-through red slash line */
+.price-slash-line {
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 2px;
+    display: none;
+    background-color: #e53e3e;
+    z-index: 5;
+    pointer-events: none;
 }
 
-/* Card-specific positioning and background matching */
-.price-exp-overlay {
-    left: 8.5%;
-    top: 42.5%;
-    width: 38%;
-    height: 10.5%;
-    background-color: #faf0e7; /* Local card background color to cover baked price */
+/* Card-specific slash positions based on baked-in coordinates */
+.price-exp-slash {
+    left: 9%;
+    top: 48.5%;
+    width: 33%;
+    height: 0.8cqw;
+    transform: rotate(-4deg);
 }
 
-.price-pop-overlay {
-    left: 6.5%;
-    top: 40.5%;
+.price-pop-slash {
+    left: 6%;
+    top: 48%;
     width: 32%;
-    height: 16%;
-    background-color: #faede5; /* Local card background color to cover baked price */
+    height: 0.8cqw;
+    transform: rotate(-4deg);
 }
 
-.price-stk-overlay {
+.price-stk-slash {
     left: 8%;
-    top: 36.5%;
-    width: 38%;
-    height: 10%;
-    background-color: #fef1e8; /* Local card background color to cover baked price */
+    top: 40.5%;
+    width: 33%;
+    height: 0.8cqw;
+    transform: rotate(-4deg);
 }
 
-.price-normal {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.3rem;
+/* Dynamic coupon discount price badge */
+.coupon-price-tag {
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #e53e3e;
+    background-color: #fff;
+    color: #e53e3e;
     font-weight: 800;
-    color: var(--color-primary);
+    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.15);
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Card-specific coupon tag placements */
+.price-exp-tag {
+    left: 9%;
+    top: 51%;
+    padding: 1.5cqw 3cqw;
+    border-radius: 1.5cqw;
+    font-size: 5.5cqw;
+}
+
+.price-pop-tag {
+    left: 6%;
+    top: 56.5%;
+    padding: 1.5cqw 3cqw;
+    border-radius: 1.5cqw;
+    font-size: 5.5cqw;
+}
+
+.price-stk-tag {
+    left: 8%;
+    top: 45.5%;
+    padding: 1.5cqw 3cqw;
+    border-radius: 1.5cqw;
+    font-size: 5.5cqw;
+}
+
+/* Show overlays only when coupon-active class is present on container */
+.coupon-active .price-slash-line {
     display: block;
 }
 
-.price-coupon-wrap {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    line-height: 1.1;
-}
-
-.price-old-crossed {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.85rem;
-    text-decoration: line-through;
-    color: var(--color-gray);
-    margin-bottom: 2px;
-}
-
-.price-new-coupon {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #e53e3e; /* Prominent red discount color */
-}
-
-/* When coupon is active */
-.coupon-active .price-normal {
-    display: none;
-}
-
-.coupon-active .price-coupon-wrap {
+.coupon-active .coupon-price-tag {
     display: flex;
-}
-
-@media (max-width: 500px) {
-    .price-normal, .price-new-coupon {
-        font-size: 1.1rem;
-    }
-    .price-old-crossed {
-        font-size: 0.75rem;
-    }
 }
 
 /* Form Wrapper & Grid */
@@ -1212,7 +1224,14 @@ main {
 
     /* Grid layouts */
     .plan-cards-v2 {
+        display: grid;
         grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        overflow-x: visible;
+        padding: 0;
+    }
+    .plan-card-v2 {
+        flex: none;
     }
     
     .form-grid {
