@@ -37,8 +37,19 @@
             <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="切換選單">
                 <i class="fa-solid fa-bars"></i>
             </button>
-        </div>
     </header>
+
+    <!-- Mobile Sticky Tab Bar -->
+    <div class="mobile-sticky-tabs" id="mobile-sticky-tabs">
+        <div class="tabs-container">
+            <a href="#ingredients" class="tab-item">成分解析</a>
+            <a href="#how-to-use" class="tab-item">飲用方法</a>
+            <a href="#certifications" class="tab-item">安心把關</a>
+            <a href="#faq" class="tab-item">常見問題</a>
+            <a href="#checkout-section" class="tab-item buy-tab">立即選購 🛒</a>
+            <a href="#hero" class="tab-item top-tab">回頁首 ⬆️</a>
+        </div>
+    </div>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
@@ -124,55 +135,72 @@
                     <span class="coupon-message" id="coupon-msg"></span>
                 </div>
 
-                <!-- Image-based Plan Cards -->
-                <div class="plan-cards-v2" id="plan-selector">
-                    <!-- Plan 1: Experience -->
-                    <div class="plan-card-v2" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
-                        <div class="card-img-wrap">
-                            <img src="plan-experience.jpg" alt="體驗組 - 1管14錠，入門首選 NT$1,480" class="card-img" loading="lazy">
-                            <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                            <div class="price-slash-line price-exp-slash"></div>
-                            <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                            <div class="coupon-price-tag price-exp-tag">
-                                <span class="tag-val">NT$ 640</span>
+                <!-- Image-based Plan Cards Carousel Wrapper -->
+                <div class="plan-carousel-wrapper">
+                    <!-- Left Arrow Button (Faded by default, scroll prev on click) -->
+                    <button type="button" class="carousel-nav-btn prev-btn" id="carousel-prev-btn" aria-label="上一個方案">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="plan-cards-v2" id="plan-selector">
+                        <!-- Plan 1: Experience -->
+                        <div class="plan-card-v2" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
+                            <div class="card-img-wrap">
+                                <img src="plan-experience.jpg" alt="體驗組 - 1管14錠，入門首選 NT$1,480" class="card-img" loading="lazy">
+                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
+                                <div class="price-slash-line price-exp-slash"></div>
+                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
+                                <div class="coupon-price-tag price-exp-tag">
+                                    <span class="tag-val">NT$ 640</span>
+                                </div>
+                            </div>
+                            <div class="card-select-indicator">
+                                <i class="fa-solid fa-circle-check"></i> 已選擇此方案
                             </div>
                         </div>
-                        <div class="card-select-indicator">
-                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
-                        </div>
-                    </div>
 
-                    <!-- Plan 2: Popular (Featured) -->
-                    <div class="plan-card-v2 featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
-                        <div class="card-img-wrap">
-                            <img src="plan-popular.jpg" alt="熱銷組 - 2管28錠，熱銷首選 NT$2,860" class="card-img" loading="lazy">
-                            <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                            <div class="price-slash-line price-pop-slash"></div>
-                            <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                            <div class="coupon-price-tag price-pop-tag">
-                                <span class="tag-val">NT$ 1,180</span>
+                        <!-- Plan 2: Popular (Featured with Crown) -->
+                        <div class="plan-card-v2 featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
+                            <!-- Gold Crown Badge -->
+                            <div class="featured-crown">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            
+                            <div class="card-img-wrap">
+                                <img src="plan-popular.jpg" alt="熱銷組 - 2管28錠，熱銷首選 NT$2,860" class="card-img" loading="lazy">
+                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
+                                <div class="price-slash-line price-pop-slash"></div>
+                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
+                                <div class="coupon-price-tag price-pop-tag">
+                                    <span class="tag-val">NT$ 1,180</span>
+                                </div>
+                            </div>
+                            <div class="card-select-indicator">
+                                <i class="fa-solid fa-circle-check"></i> 已選擇此方案
                             </div>
                         </div>
-                        <div class="card-select-indicator">
-                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
-                        </div>
-                    </div>
 
-                    <!-- Plan 3: Stockpile -->
-                    <div class="plan-card-v2" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
-                        <div class="card-img-wrap">
-                            <img src="plan-stockpile.jpg" alt="囤貨組 - 6管84錠，超值囤貨 NT$8,380" class="card-img" loading="lazy">
-                            <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                            <div class="price-slash-line price-stk-slash"></div>
-                            <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                            <div class="coupon-price-tag price-stk-tag">
-                                <span class="tag-val">NT$ 3,340</span>
+                        <!-- Plan 3: Stockpile -->
+                        <div class="plan-card-v2" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
+                            <div class="card-img-wrap">
+                                <img src="plan-stockpile.jpg" alt="囤貨組 - 6管84錠，超值囤貨 NT$8,380" class="card-img" loading="lazy">
+                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
+                                <div class="price-slash-line price-stk-slash"></div>
+                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
+                                <div class="coupon-price-tag price-stk-tag">
+                                    <span class="tag-val">NT$ 3,340</span>
+                                </div>
+                            </div>
+                            <div class="card-select-indicator">
+                                <i class="fa-solid fa-circle-check"></i> 已選擇此方案
                             </div>
                         </div>
-                        <div class="card-select-indicator">
-                            <i class="fa-solid fa-circle-check"></i> 已選擇此方案
-                        </div>
                     </div>
+                    
+                    <!-- Right Arrow Button (Faded by default, scroll next on click) -->
+                    <button type="button" class="carousel-nav-btn next-btn" id="carousel-next-btn" aria-label="下一個方案">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -249,6 +277,11 @@
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
+
+    <!-- Floating Back to Top Button -->
+    <button type="button" class="back-to-top-btn" id="back-to-top-btn" aria-label="回到最上面">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
 
     <!-- JS Logic -->
     <script src="script.js"></script>

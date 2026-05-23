@@ -292,4 +292,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start the notification cycle
     startToastCycle();
+
+    // ==========================================================================
+    // CAROUSEL NAVIGATION (Prev/Next buttons)
+    // ==========================================================================
+    const prevBtn = document.getElementById('carousel-prev-btn');
+    const nextBtn = document.getElementById('carousel-next-btn');
+    const planSelector = document.getElementById('plan-selector');
+
+    if (prevBtn && nextBtn && planSelector) {
+        prevBtn.addEventListener('click', () => {
+            const card = planSelector.querySelector('.plan-card-v2');
+            if (card) {
+                const cardWidth = card.offsetWidth + 16; // width + gap
+                planSelector.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const card = planSelector.querySelector('.plan-card-v2');
+            if (card) {
+                const cardWidth = card.offsetWidth + 16; // width + gap
+                planSelector.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        });
+    }
+
+    // ==========================================================================
+    // BACK TO TOP BUTTON
+    // ==========================================================================
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
