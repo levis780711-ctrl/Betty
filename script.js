@@ -108,22 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateDiscountOverlays() {
-        const overlayIds = {
-            experience: 'disc-exp',
-            popular: 'disc-pop',
-            stockpile: 'disc-stk'
-        };
-
-        Object.keys(overlayIds).forEach(planId => {
-            const overlay = document.getElementById(overlayIds[planId]);
-            if (overlay) {
-                if (isCouponApplied) {
-                    overlay.classList.add('visible');
-                } else {
-                    overlay.classList.remove('visible');
-                }
+        const planSelector = document.getElementById('plan-selector');
+        if (planSelector) {
+            if (isCouponApplied) {
+                planSelector.classList.add('coupon-active');
+            } else {
+                planSelector.classList.remove('coupon-active');
             }
-        });
+        }
 
         // Update active card sticky bar price
         const activeCard = document.querySelector('.plan-card-v2.active');

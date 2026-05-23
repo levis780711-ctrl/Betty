@@ -265,8 +265,8 @@ main {
 
 /* ---- New Image-based Plan Cards ---- */
 .plan-cards-v2 {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 24px;
     margin-bottom: 20px;
 }
@@ -334,68 +334,87 @@ main {
     gap: 6px;
 }
 
-/* Discount Overlay */
-.discount-overlay {
+/* Price Overlay - Covering the baked-in static price on the card images */
+.price-overlay {
     position: absolute;
-    bottom: 60px;
-    left: 0;
-    right: 0;
-    padding: 0 16px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    pointer-events: none;
-}
-
-.discount-overlay.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.disc-content {
-    background: linear-gradient(135deg, rgba(45, 138, 78, 0.92), rgba(33, 110, 62, 0.95));
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    padding: 14px 18px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    justify-content: flex-start;
+    padding-left: 2px;
 }
 
-.disc-tag {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+/* Card-specific positioning and background matching */
+.price-exp-overlay {
+    left: 8.5%;
+    top: 42.5%;
+    width: 38%;
+    height: 10.5%;
+    background-color: #faf0e7; /* Local card background color to cover baked price */
 }
 
-.disc-old {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: line-through;
-    font-size: 0.85rem;
-    font-weight: 500;
+.price-pop-overlay {
+    left: 6.5%;
+    top: 40.5%;
+    width: 32%;
+    height: 16%;
+    background-color: #faede5; /* Local card background color to cover baked price */
 }
 
-.disc-arrow {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.75rem;
+.price-stk-overlay {
+    left: 8%;
+    top: 36.5%;
+    width: 38%;
+    height: 10%;
+    background-color: #fef1e8; /* Local card background color to cover baked price */
 }
 
-.disc-new {
-    color: #fff;
+.price-normal {
+    font-family: 'Outfit', sans-serif;
     font-size: 1.3rem;
     font-weight: 800;
+    color: var(--color-primary);
+    display: block;
+}
+
+.price-coupon-wrap {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 1.1;
+}
+
+.price-old-crossed {
     font-family: 'Outfit', sans-serif;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-size: 0.85rem;
+    text-decoration: line-through;
+    color: var(--color-gray);
+    margin-bottom: 2px;
+}
+
+.price-new-coupon {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #e53e3e; /* Prominent red discount color */
+}
+
+/* When coupon is active */
+.coupon-active .price-normal {
+    display: none;
+}
+
+.coupon-active .price-coupon-wrap {
+    display: flex;
+}
+
+@media (max-width: 500px) {
+    .price-normal, .price-new-coupon {
+        font-size: 1.1rem;
+    }
+    .price-old-crossed {
+        font-size: 0.75rem;
+    }
 }
 
 /* Form Wrapper & Grid */
@@ -1169,7 +1188,7 @@ main {
     }
     
     .checkout-section {
-        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+        border-radius: 0;
     }
     
     .main-footer {
@@ -1192,7 +1211,7 @@ main {
     }
 
     /* Grid layouts */
-    .plan-cards-grid {
+    .plan-cards-v2 {
         grid-template-columns: repeat(3, 1fr);
     }
     
