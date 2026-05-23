@@ -228,7 +228,7 @@ main {
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 50px 20px 80px;
-    background-color: #f7f3f0;
+    background-color: #fff5f2; /* 溫暖的粉橘米色背景，與海報圖片無縫融合 */
     box-shadow: var(--shadow-sm);
 }
 
@@ -286,12 +286,12 @@ main {
     cursor: pointer;
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: var(--shadow-sm);
-    border: 3px solid transparent;
+    border: 2px solid rgba(212, 77, 50, 0.18); /* 粉橘色細邊框 */
     /* Mobile: one full-width card per view */
     flex: 0 0 calc(100% - 32px);
     margin: 0 16px;
     scroll-snap-align: center;
-    background: #fff;
+    background: #fffdfb; /* 溫暖的淺粉米色背景 */
     display: flex;
     flex-direction: column;
 }
@@ -363,7 +363,7 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background: #fff;
+    background: transparent; /* 繼承卡片背景色 */
     border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
@@ -423,7 +423,7 @@ main {
     justify-content: center;
     gap: 12px;
     padding: 15px 0;
-    background: #fff;
+    background: transparent; /* 繼承卡片背景色 */
     border-top: 1px solid rgba(212, 77, 50, 0.1);
     min-height: 58px;
     margin-top: auto;
@@ -538,7 +538,7 @@ main {
 
 /* Form Wrapper & Grid */
 .form-wrapper {
-    background: var(--color-light);
+    background: #fffdfb;
     border-radius: var(--radius-lg);
     padding: 24px;
     border: 1px solid rgba(212, 77, 50, 0.08);
@@ -816,7 +816,7 @@ main {
 .coupon-section {
     margin: 0 auto 30px auto;
     max-width: 480px;
-    background: #fff;
+    background: #fffdfb;
     border: 1px solid rgba(212, 77, 50, 0.15);
     border-radius: var(--radius-md);
     padding: 16px;
@@ -1005,7 +1005,7 @@ main {
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding: 40px 20px;
-    background: #f7f3f0;
+    background: #fff5f2; /* 與下單區背景一致 */
     border-top: 1px solid var(--color-gray-light);
     box-shadow: var(--shadow-sm);
 }
