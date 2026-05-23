@@ -135,24 +135,33 @@
                     <span class="coupon-message" id="coupon-msg"></span>
                 </div>
 
-                <!-- Image-based Plan Cards Carousel Wrapper -->
+                <!-- Plan Cards Carousel Wrapper -->
                 <div class="plan-carousel-wrapper">
-                    <!-- Left Arrow Button (Faded by default, scroll prev on click) -->
                     <button type="button" class="carousel-nav-btn prev-btn" id="carousel-prev-btn" aria-label="上一個方案">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
                     
                     <div class="plan-cards-v2" id="plan-selector">
+
                         <!-- Plan 1: Experience -->
                         <div class="plan-card-v2" data-plan="experience" data-price="1480" data-name="【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)">
+                            <div class="card-badge">✨ 入門首選</div>
                             <div class="card-img-wrap">
-                                <img src="plan-experience.jpg" alt="體驗組 - 1管14錠，入門首選 NT$1,480" class="card-img" loading="lazy">
-                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                                <div class="price-slash-line price-exp-slash"></div>
-                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                                <div class="coupon-price-tag price-exp-tag">
-                                    <span class="tag-val">NT$ 640</span>
+                                <img src="product-1tube.jpg" alt="體驗組 - 1管14錠" class="card-img" loading="lazy">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-plan-name">體驗組</h3>
+                                <p class="card-plan-spec">1管（共14錠）</p>
+                                <ul class="card-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> 適合首次入手體驗</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 隨身攜帶，無負擔嘗試</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,480 / 管</li>
+                                </ul>
+                                <div class="card-price-bar">
+                                    <span class="card-original-price">NT$ 1,480</span>
+                                    <span class="card-coupon-price" data-coupon-price="NT$ 640"></span>
                                 </div>
+                                <button class="card-select-btn">選擇此方案</button>
                             </div>
                             <div class="card-select-indicator">
                                 <i class="fa-solid fa-circle-check"></i> 已選擇此方案
@@ -161,19 +170,26 @@
 
                         <!-- Plan 2: Popular (Featured with Crown) -->
                         <div class="plan-card-v2 featured" data-plan="popular" data-price="2860" data-name="【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)">
-                            <!-- Gold Crown Badge -->
                             <div class="featured-crown">
                                 <i class="fa-solid fa-crown"></i>
                             </div>
-                            
+                            <div class="card-badge featured-badge">🔥 熱銷首選</div>
                             <div class="card-img-wrap">
-                                <img src="plan-popular.jpg" alt="熱銷組 - 2管28錠，熱銷首選 NT$2,860" class="card-img" loading="lazy">
-                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                                <div class="price-slash-line price-pop-slash"></div>
-                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                                <div class="coupon-price-tag price-pop-tag">
-                                    <span class="tag-val">NT$ 1,180</span>
+                                <img src="product-2tube.jpg" alt="熱銷組 - 2管28錠" class="card-img" loading="lazy">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-plan-name">熱銷組</h3>
+                                <p class="card-plan-spec">2管（共28錠）</p>
+                                <ul class="card-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,430 / 管</li>
+                                </ul>
+                                <div class="card-price-bar">
+                                    <span class="card-original-price">NT$ 2,860</span>
+                                    <span class="card-coupon-price" data-coupon-price="NT$ 1,180"></span>
                                 </div>
+                                <button class="card-select-btn">選擇此方案</button>
                             </div>
                             <div class="card-select-indicator">
                                 <i class="fa-solid fa-circle-check"></i> 已選擇此方案
@@ -182,22 +198,31 @@
 
                         <!-- Plan 3: Stockpile -->
                         <div class="plan-card-v2" data-plan="stockpile" data-price="8380" data-name="【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)">
+                            <div class="card-badge">📦 超值囤貨</div>
                             <div class="card-img-wrap">
-                                <img src="plan-stockpile.jpg" alt="囤貨組 - 6管84錠，超值囤貨 NT$8,380" class="card-img" loading="lazy">
-                                <!-- Absolute strike-through line (visible only when coupon is applied) -->
-                                <div class="price-slash-line price-stk-slash"></div>
-                                <!-- Absolute coupon price tag (visible only when coupon is applied) -->
-                                <div class="coupon-price-tag price-stk-tag">
-                                    <span class="tag-val">NT$ 3,340</span>
+                                <img src="product-6tube.jpg" alt="囤貨組 - 6管84錠" class="card-img" loading="lazy">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-plan-name">囤貨組</h3>
+                                <p class="card-plan-spec">6管（共84錠）</p>
+                                <ul class="card-features">
+                                    <li><i class="fa-solid fa-circle-check"></i> 長效常備，全家分享</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 性價比最高，現省最多</li>
+                                    <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,397 / 管</li>
+                                </ul>
+                                <div class="card-price-bar">
+                                    <span class="card-original-price">NT$ 8,380</span>
+                                    <span class="card-coupon-price" data-coupon-price="NT$ 3,340"></span>
                                 </div>
+                                <button class="card-select-btn">選擇此方案</button>
                             </div>
                             <div class="card-select-indicator">
                                 <i class="fa-solid fa-circle-check"></i> 已選擇此方案
                             </div>
                         </div>
+
                     </div>
                     
-                    <!-- Right Arrow Button (Faded by default, scroll next on click) -->
                     <button type="button" class="carousel-nav-btn next-btn" id="carousel-next-btn" aria-label="下一個方案">
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>

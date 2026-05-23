@@ -117,6 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Fill in coupon prices from data-coupon-price attribute
+        document.querySelectorAll('.card-coupon-price').forEach(el => {
+            el.textContent = el.getAttribute('data-coupon-price') || '';
+        });
+
         // Update active card sticky bar price
         const activeCard = document.querySelector('.plan-card-v2.active');
         if (activeCard) {
