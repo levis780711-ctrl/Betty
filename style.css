@@ -282,7 +282,7 @@ main {
 .plan-card-v2 {
     position: relative;
     border-radius: var(--radius-md);
-    overflow: hidden;
+    overflow: visible; /* Prevent crown badge from being cut off! */
     cursor: pointer;
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: var(--shadow-sm);
@@ -311,6 +311,7 @@ main {
     position: relative;
     width: 100%;
     overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0; /* Apply rounding to top corners of wrapper */
 }
 
 .card-img {
@@ -318,6 +319,7 @@ main {
     height: auto;
     display: block;
     transition: transform 0.4s ease;
+    border-radius: var(--radius-md) var(--radius-md) 0 0; /* Apply rounding to top corners of image */
 }
 
 .plan-card-v2:hover .card-img {
@@ -343,6 +345,7 @@ main {
     align-items: center;
     justify-content: center;
     gap: 6px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md); /* Apply rounding to bottom corners of indicator */
 }
 
 /* Price strike-through red slash line */
@@ -384,40 +387,36 @@ main {
     position: absolute;
     display: none;
     align-items: center;
-    justify-content: center;
-    border: 1.5px solid #e53e3e;
-    background-color: #fff;
-    color: #e53e3e;
-    font-weight: 800;
+    justify-content: flex-start;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #e53e3e !important;
+    font-weight: 900;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
-    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.15);
     z-index: 10;
     pointer-events: none;
+    line-height: 1 !important;
+    white-space: nowrap !important;
 }
 
 /* Card-specific coupon tag placements */
 .price-exp-tag {
-    left: 9%;
-    top: 51%;
-    padding: 1.5cqw 3cqw;
-    border-radius: 1.5cqw;
-    font-size: 5.5cqw;
+    left: 43%;
+    top: 46%;
+    font-size: 5.6cqw;
 }
 
 .price-pop-tag {
-    left: 6%;
-    top: 56.5%;
-    padding: 1.5cqw 3cqw;
-    border-radius: 1.5cqw;
-    font-size: 5.5cqw;
+    left: 39%;
+    top: 45.5%;
+    font-size: 5.6cqw;
 }
 
 .price-stk-tag {
-    left: 8%;
-    top: 45.5%;
-    padding: 1.5cqw 3cqw;
-    border-radius: 1.5cqw;
-    font-size: 5.5cqw;
+    left: 42%;
+    top: 38%;
+    font-size: 5.6cqw;
 }
 
 /* Show overlays only when coupon-active class is present on container */
@@ -1470,18 +1469,18 @@ main {
 /* Golden crown badge peeking from the top border */
 .featured-crown {
     position: absolute;
-    top: -12px;
+    top: -18px; /* Float higher */
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(135deg, #ffd700, #ff9b00);
     color: #fff;
-    width: 32px;
-    height: 32px;
+    width: 38px; /* Larger badge */
+    height: 38px; /* Larger badge */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 1.05rem; /* Larger icon */
     box-shadow: 0 4px 10px rgba(255, 155, 0, 0.4);
     z-index: 10;
     border: 1.5px solid #fff;
@@ -1493,21 +1492,7 @@ main {
     100% { transform: translate(-50%, -3px); }
 }
 
-/* Clean text-only discount prices */
-.coupon-price-tag {
-    position: absolute;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #e53e3e !important;
-    font-weight: 900;
-    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
-    z-index: 10;
-    pointer-events: none;
-}
+/* Clean text-only discount prices style is defined above */
 
 /* ==========================================================================
    FLOATING BACK TO TOP BUTTON
