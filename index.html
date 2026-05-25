@@ -171,6 +171,20 @@
                                 <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>
                                 <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,430 / 管</li>
                             </ul>
+                            
+                            <!-- 2.5 Qty Selector -->
+                            <div class="quantity-selector-section">
+                                <span class="quantity-label">選購數量：</span>
+                                <div class="quantity-input-wrap">
+                                    <button type="button" class="qty-btn qty-minus" id="qty-minus-btn" aria-label="減少數量">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <input type="number" id="qty-input" value="1" min="1" max="99" readonly>
+                                    <button type="button" class="qty-btn qty-plus" id="qty-plus-btn" aria-label="增加數量">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- 3. Dynamic Price Bar -->

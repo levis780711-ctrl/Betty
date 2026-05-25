@@ -337,13 +337,21 @@ main {
     background: var(--color-primary);
     color: #fff;
     box-shadow: 0 4px 12px rgba(212, 77, 50, 0.3);
+    font-size: 0.88rem; /* Slightly larger badge text */
+    padding: 7px 14px;
 }
 
-.product-image-display .card-badge i.fa-crown {
-    color: #ffe066; /* Gold crown */
-    margin-right: 5px;
-    font-size: 0.85rem;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.12));
+.product-image-display .card-badge.featured-badge i.fa-crown {
+    color: #ffd700; /* Bright gold crown */
+    margin-right: 6px;
+    font-size: 1.15rem; /* Make it significantly larger! */
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.18));
+    animation: badgeCrownPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes badgeCrownPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15) rotate(5deg); }
 }
 
 /* Details area on right/bottom */
@@ -356,7 +364,9 @@ main {
 
 /* Spec Chips Selector */
 .spec-selector-section {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid rgba(212, 77, 50, 0.06);
+    padding-bottom: 16px;
 }
 
 .spec-selector-label {
@@ -364,19 +374,23 @@ main {
     font-size: 0.85rem;
     font-weight: 800;
     color: #8c7e7b;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
 }
 
 .spec-chips-group {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: nowrap; /* Force one row */
+    gap: 8px; /* Slightly smaller gap */
+    width: 100%;
 }
 
 .spec-chip {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    flex: 1; /* Equal sizing */
+    justify-content: center;
+    white-space: nowrap; /* Prevent wrapping */
+    padding: 10px 8px; /* Compact horizontal padding */
+    font-size: 0.85rem; /* Compact font size to fit horizontally */
     font-weight: 700;
     color: var(--color-dark);
     background: #fff;
@@ -387,7 +401,7 @@ main {
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .spec-chip:hover {
@@ -472,6 +486,73 @@ main {
     color: var(--color-primary);
     font-size: 0.95rem;
     flex-shrink: 0;
+}
+
+/* Quantity Selector Section */
+.quantity-selector-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(212, 77, 50, 0.1);
+}
+
+.quantity-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #8c7e7b;
+    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+}
+
+.quantity-input-wrap {
+    display: inline-flex;
+    align-items: center;
+    background: #fbf8f6;
+    border: 1.5px solid var(--color-gray-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.qty-btn {
+    width: 36px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    color: var(--color-dark);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.qty-btn:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+#qty-input {
+    width: 44px;
+    height: 34px;
+    border: none;
+    border-left: 1px solid var(--color-gray-light);
+    border-right: 1px solid var(--color-gray-light);
+    background: #fff;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    -moz-appearance: textfield;
+}
+
+#qty-input::-webkit-outer-spin-button,
+#qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Price block */

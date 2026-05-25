@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isCouponApplied = false;
     let currentPlanId = 'popular';
+    let currentQty = 1;
 
     function selectPlan(planId) {
         currentPlanId = planId;
@@ -181,19 +182,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const couponPriceEl = document.getElementById('dynamic-coupon-price');
 
         if (originalPriceEl) {
-            originalPriceEl.textContent = `NT$ ${config.normalPrice.toLocaleString('en-US')}`;
+            originalPriceEl.textContent = `NT$ ${(config.normalPrice * currentQty).toLocaleString('en-US')}`;
         }
         if (couponPriceEl) {
-            couponPriceEl.setAttribute('data-coupon-price', `NT$ ${config.couponPrice.toLocaleString('en-US')}`);
+            couponPriceEl.setAttribute('data-coupon-price', `NT$ ${(config.couponPrice * currentQty).toLocaleString('en-US')}`);
             if (isCouponApplied) {
-                couponPriceEl.textContent = `NT$ ${config.couponPrice.toLocaleString('en-US')}`;
+                couponPriceEl.textContent = `NT$ ${(config.couponPrice * currentQty).toLocaleString('en-US')}`;
             }
         }
 
         // 7. Update sticky bar
         const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
-        if (stickyPlanLabel) stickyPlanLabel.textContent = config.shortLabel;
-        if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${finalPrice.toLocaleString('en-US')}`;
+        if (stickyPlanLabel) stickyPlanLabel.textContent = `${config.shortLabel} x ${currentQty}`;
+        if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${(finalPrice * currentQty).toLocaleString('en-US')}`;
     }
 
     function updateDiscountOverlays() {
@@ -217,6 +218,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Set click handlers on spec chips
+    // Quantity Selector Action Handlers
+    const qtyInput = document.getElementById('qty-input');
+    const qtyMinusBtn = document.getElementById('qty-minus-btn');
+    const qtyPlusBtn = document.getElementById('qty-plus-btn');
+
+    if (qtyInput && qtyMinusBtn && qtyPlusBtn) {
+        qtyMinusBtn.addEventListener('click', () => {
+            if (currentQty > 1) {
+                currentQty--;
+                qtyInput.value = currentQty;
+                selectPlan(currentPlanId);
+            }
+        });
+
+        qtyPlusBtn.addEventListener('click', () => {
+            if (currentQty < 99) {
+                currentQty++;
+                qtyInput.value = currentQty;
+                selectPlan(currentPlanId);
+            }
+        });
+    }
+
+    // Set click handlers on spec chips
     specChips.forEach(chip => {
         chip.addEventListener('click', () => {
             const planId = chip.getAttribute('data-plan');
@@ -229,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutActionBtn) {
         checkoutActionBtn.addEventListener('click', () => {
             const config = planConfigs[currentPlanId];
-            alert(`感謝您的選購！您已選擇：${config.fullName}，正在為您引導至安全結帳頁面...`);
+            alert(`感謝您的選購！您已選擇：${config.fullName}，數量：${currentQty} 組，正在為您引導至安全結帳頁面...`);
         });
     }
 
