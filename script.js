@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Force scroll to top on reload and prevent scroll restoration
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    }
+    if (window.location.hash) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    }
+    window.scrollTo(0, 0);
     
     // ==========================================================================
     // DOM ELEMENTS
