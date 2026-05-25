@@ -398,6 +398,9 @@ main {
     cursor: pointer;
     transition: var(--transition);
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .spec-chip:hover {
@@ -410,6 +413,30 @@ main {
     color: var(--color-primary);
     background: var(--color-primary-light);
     box-shadow: 0 2px 8px rgba(212, 77, 50, 0.1);
+}
+
+/* Unique highlight for Recommended/Popular chip (with crown) */
+.spec-chip[data-plan="popular"] {
+    position: relative;
+    border-color: rgba(243, 168, 140, 0.5); /* Peach tint */
+    background: #fffcfb;
+}
+
+.spec-chip[data-plan="popular"] .chip-crown-icon {
+    color: #e8a800; /* Gold crown */
+    transition: var(--transition);
+}
+
+.spec-chip[data-plan="popular"].active {
+    border-color: #e8a800; /* Rich gold/amber border */
+    color: #4a321a;
+    background: linear-gradient(135deg, #fffcf0, #fffae6); /* Cream gold gradient */
+    box-shadow: 0 4px 12px rgba(232, 168, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.spec-chip[data-plan="popular"].active .chip-crown-icon {
+    transform: scale(1.2) rotate(-8deg);
 }
 
 /* Dynamic Content block */
@@ -471,7 +498,59 @@ main {
     border: none;
     padding: 0;
     min-height: auto;
+    display: flex;
+    align-items: baseline;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.card-original-price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-dark);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+/* Strikethrough on original price when coupon applied */
+.coupon-active .card-original-price {
+    text-decoration: line-through;
+    color: #a39794; /* Muted gray-brown */
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.card-coupon-price {
+    display: none; /* Hidden by default */
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--color-primary); /* Bold coral-red */
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+/* When coupon is active, show the coupon price */
+.coupon-active .card-coupon-price {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Add a badge before coupon price to make it super obvious */
+.coupon-active .card-coupon-price::before {
+    content: "折後價";
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
 }
 
 /* CTA Checkout Button */
