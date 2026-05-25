@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=2.4">
+    <link rel="stylesheet" href="style.css?v=2.5">
 </head>
 <body>
 
@@ -149,7 +149,13 @@
                     <!-- Right/Bottom Side: Product Config & Details -->
                     <div class="product-details-wrap">
                         
-                        <!-- 1. Spec Selection (Chips/Pills) -->
+                        <!-- 1. Dynamic Details Header (Plan title, sub-spec) -->
+                        <div class="dynamic-details-header">
+                            <h3 class="dynamic-plan-name" id="dynamic-plan-name">熱銷組</h3>
+                            <p class="dynamic-plan-spec" id="dynamic-plan-spec">2管（共28錠）</p>
+                        </div>
+                        
+                        <!-- 2. Spec Selection (Chips/Pills) -->
                         <div class="spec-selector-section">
                             <span class="spec-selector-label">選擇規格組合：</span>
                             <div class="spec-chips-group" id="spec-chips-group">
@@ -161,11 +167,8 @@
                             </div>
                         </div>
                         
-                        <!-- 2. Dynamic Details (Plan title, sub-spec, description list) -->
+                        <!-- 3. Dynamic Details Features & Qty -->
                         <div class="dynamic-details-block">
-                            <h3 class="dynamic-plan-name" id="dynamic-plan-name">熱銷組</h3>
-                            <p class="dynamic-plan-spec" id="dynamic-plan-spec">2管（共28錠）</p>
-                            
                             <ul class="dynamic-features-list" id="dynamic-features-list">
                                 <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
                                 <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>

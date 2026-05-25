@@ -441,6 +441,10 @@ main {
 }
 
 /* Dynamic Content block */
+.dynamic-details-header {
+    margin-bottom: 18px;
+}
+
 .dynamic-details-block {
     margin-bottom: 20px;
 }
@@ -457,7 +461,7 @@ main {
 .dynamic-plan-spec {
     font-size: 0.9rem;
     color: #8c7e7b;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     font-weight: 700;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
 }
