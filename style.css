@@ -259,81 +259,77 @@ main {
 }
 
 .section-desc {
-    font-size: 0.9rem;
-    color: var(--color-gray);
-}
-
-/* ---- New Image-based Plan Cards ---- */
-.plan-cards-v2 {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 0;
-    padding: 15px 0;
-    margin-bottom: 20px;
-    scroll-padding: 0;
-    -webkit-overflow-scrolling: touch;
-}
-
-.plan-cards-v2::-webkit-scrollbar {
-    display: none;
-}
-
-.plan-card-v2 {
-    position: relative;
-    border-radius: var(--radius-md);
-    overflow: visible;
-    cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: var(--shadow-sm);
-    border: 2px solid rgba(212, 77, 50, 0.18); /* 粉橘色細邊框 */
-    /* Mobile: one full-width card per view */
-    flex: 0 0 calc(100% - 32px);
-    margin: 0 16px;
-    scroll-snap-align: center;
-    background: #fffdfb; /* 溫暖的淺粉米色背景 */
+    font-size: 0.9re/* ==========================================================================
+   PRODUCT SELECTION CARD (SINGLE DYNAMIC SELECTOR)
+   ========================================================================== */
+.product-selection-card {
     display: flex;
     flex-direction: column;
+    background: #fffdfb; /* 溫暖的淺粉米色背景 */
+    border: 2px solid rgba(212, 77, 50, 0.18); /* 粉橘色細邊框 */
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: visible;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: var(--transition);
 }
 
-.plan-card-v2:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+.product-selection-card:hover {
+    box-shadow: var(--shadow-md);
 }
 
-.plan-card-v2.active {
-    border-color: var(--color-primary);
-    box-shadow: 0 8px 30px rgba(212, 77, 50, 0.25);
-}
-
-.plan-card-v2.active .card-select-indicator {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.card-img-wrap {
+/* Image Display area */
+.product-image-display {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
+    background: #fdfaf7;
     border-radius: var(--radius-md) var(--radius-md) 0 0;
+    overflow: visible; /* to show the crown on top */
 }
 
-.card-img {
+.display-img-wrap {
+    width: 100%;
+    aspect-ratio: 1.1 / 1;
+    overflow: hidden;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    position: relative;
+}
+
+.main-display-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    transition: opacity 0.3s ease; /* Fade-in effect */
 }
 
-.plan-card-v2:hover .card-img {
-    transform: scale(1.02);
+/* Crown positioned on image top border */
+.product-image-display .featured-crown {
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #f6c94e, #e8a800);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(232, 168, 0, 0.45);
 }
 
-/* Card Badge styling */
-.card-badge {
+.product-image-display .featured-crown i {
+    font-size: 1.4rem;
+    color: #fff;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}
+
+/* Card Badge positioned over image */
+.product-image-display .card-badge {
     position: absolute;
     top: 15px;
     left: 15px;
@@ -350,58 +346,101 @@ main {
     gap: 4px;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
     backdrop-filter: blur(4px);
+    transition: var(--transition);
 }
 
-.card-badge.featured-badge {
+.product-image-display .card-badge.featured-badge {
     background: var(--color-primary);
     color: #fff;
 }
 
-/* Card Body styling */
-.card-body {
-    padding: 20px;
+/* Details area on right/bottom */
+.product-details-wrap {
+    padding: 24px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background: transparent; /* 繼承卡片背景色 */
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
-.card-plan-name {
-    font-size: 1.4rem;
+/* Spec Chips Selector */
+.spec-selector-section {
+    margin-bottom: 20px;
+}
+
+.spec-selector-label {
+    display: block;
+    font-size: 0.85rem;
     font-weight: 800;
-    color: #4a332e; /* 溫暖的深咖啡色，比純黑更柔和且符合網頁色調 */
-    margin-bottom: 6px;
-    text-align: center;
+    color: #8c7e7b;
+    margin-bottom: 10px;
+    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+}
+
+.spec-chips-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.spec-chip {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    background: #fff;
+    border: 1.5px solid var(--color-gray-light);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+}
+
+.spec-chip:hover {
+    border-color: var(--color-secondary);
+    background: #fffdfc;
+}
+
+.spec-chip.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    box-shadow: 0 2px 8px rgba(212, 77, 50, 0.1);
+}
+
+/* Dynamic Content block */
+.dynamic-details-block {
+    margin-bottom: 20px;
+}
+
+.dynamic-plan-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #4a332e;
+    margin-bottom: 4px;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
     letter-spacing: 0.5px;
 }
 
-.card-plan-spec {
+.dynamic-plan-spec {
     font-size: 0.9rem;
-    color: #8c7e7b; /* 灰褐色 */
-    margin-bottom: 18px;
-    text-align: center;
+    color: #8c7e7b;
+    margin-bottom: 16px;
     font-weight: 700;
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
 }
 
-/* Features List styling */
-.card-features {
+.dynamic-features-list {
     list-style: none;
     padding: 0;
-    margin: 0 auto 20px auto;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    flex-grow: 1;
-    width: 100%;
-    max-width: 240px;
 }
 
-.card-features li {
+.dynamic-features-list li {
     font-size: 0.85rem;
-    color: #543d38; /* 溫暖的棕褐色，取代冷硬的純黑 */
+    color: #543d38;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -410,131 +449,63 @@ main {
     font-weight: 600;
 }
 
-.card-features li i {
+.dynamic-features-list li i {
     color: var(--color-primary);
     font-size: 0.95rem;
     flex-shrink: 0;
 }
 
-/* Price Bar below features */
-.card-price-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 15px 0;
-    background: transparent; /* 繼承卡片背景色 */
+/* Price block */
+.dynamic-price-bar-wrap {
     border-top: 1px solid rgba(212, 77, 50, 0.1);
-    min-height: 58px;
+    padding: 16px 0;
     margin-top: auto;
 }
 
-.card-original-price {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--color-primary);
-    font-family: 'Outfit', sans-serif;
-    line-height: 1;
+.dynamic-price-bar-wrap .card-price-bar {
+    border: none;
+    padding: 0;
+    min-height: auto;
+    justify-content: flex-start;
 }
 
-/* Strikethrough on original price when coupon applied */
-.coupon-active .card-original-price {
-    text-decoration: line-through;
-    color: var(--color-gray);
-    font-size: 1.05rem;
-    font-weight: 600;
-}
-
-.card-coupon-price {
-    font-size: 1.7rem;
-    font-weight: 900;
-    color: var(--color-primary);
-    font-family: 'Outfit', sans-serif;
-    line-height: 1;
-    display: none; /* Hidden until coupon applied */
-}
-
-/* Show coupon price when active */
-.coupon-active .card-coupon-price {
-    display: block;
-}
-
-/* Card Select Button */
-.card-select-btn {
+/* CTA Checkout Button */
+.checkout-action-btn {
     width: 100%;
-    background: var(--color-gray-light);
-    color: var(--color-dark);
+    background: var(--color-primary);
+    color: #fff;
     border: none;
     border-radius: var(--radius-sm);
-    padding: 12px;
-    font-size: 0.95rem;
+    padding: 14px;
+    font-size: 1.05rem;
     font-weight: 800;
     cursor: pointer;
     transition: var(--transition);
     text-align: center;
-    margin-top: 12px;
-    font-family: 'Outfit', 'Noto Sans TC', sans-serif;
-}
-
-.plan-card-v2:hover .card-select-btn {
-    background: var(--color-primary-light);
-    color: var(--color-primary);
-}
-
-.plan-card-v2.active .card-select-btn {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    margin-top: 12px;
-}
-
-/* Card Selection Indicator */
-.card-select-indicator {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--color-primary);
-    color: #fff;
-    text-align: center;
-    padding: 12px 0;
-    font-size: 0.9rem;
-    font-weight: 800;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: all 0.35s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    border-radius: 0 0 var(--radius-md) var(--radius-md); /* Apply rounding to bottom corners of indicator */
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(212, 77, 50, 0.2);
     font-family: 'Outfit', 'Noto Sans TC', sans-serif;
 }
 
-/* ==========================================================================
-   FEATURED CROWN BADGE
-   ========================================================================== */
-.featured-crown {
-    position: absolute;
-    top: -26px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    width: 52px;
-    height: 52px;
-    background: linear-gradient(135deg, #f6c94e, #e8a800);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 14px rgba(232, 168, 0, 0.45);
+.checkout-action-btn:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 77, 50, 0.35);
 }
 
-.featured-crown i {
-    font-size: 1.4rem;
-    color: #fff;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+.checkout-action-btn:active {
+    transform: translateY(0);
 }
+
+/* Image Switching Fade Transition */
+.main-display-img.switching {
+    opacity: 0.15;
+}
+
+
 
 /* Form Wrapper & Grid */
 .form-wrapper {
@@ -1330,22 +1301,36 @@ main {
     }
 
     /* Grid layouts */
-    .plan-cards-v2 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        overflow-x: visible;
-        padding: 0;
-        scroll-snap-type: none;
+    /* Product Selection Card Grid Layout */
+    .product-selection-card {
+        max-width: var(--content-max-width);
+        flex-direction: row; /* side-by-side grid */
     }
-    .plan-card-v2 {
-        flex: none;
-        margin: 0;
-        min-height: 420px;
+    
+    .product-image-display {
+        width: 48%;
+        border-radius: var(--radius-md) 0 0 var(--radius-md);
     }
-    .card-img {
-        height: auto;
-        object-fit: cover;
+    
+    .display-img-wrap {
+        height: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: var(--radius-md) 0 0 var(--radius-md);
+    }
+    
+    .main-display-img {
+        border-radius: var(--radius-md) 0 0 var(--radius-md);
+    }
+    
+    .product-image-display .featured-crown {
+        top: 50%;
+        left: -26px;
+        transform: translateY(-50%) translateX(0); /* Crown overlays on the left border */
+    }
+    
+    .product-details-wrap {
+        width: 52%;
+        padding: 30px;
     }
     
     .form-grid {

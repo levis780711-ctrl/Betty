@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
     
-    // New image-based plan cards
-    const planCards = document.querySelectorAll('.plan-card-v2');
+    // New spec selector chips
+    const specChips = document.querySelectorAll('.spec-chip');
     
     // Sticky bottom bar
     const stickyCtaBar = document.getElementById('sticky-cta-bar');
@@ -69,42 +69,136 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // PLAN SELECTION LOGIC (Image-based Cards)
+    // PLAN SELECTION LOGIC (Spec Chips & Single Card Selector)
     // ==========================================================================
     const planConfigs = {
         experience: {
             normalPrice: 1480,
             couponPrice: 640,
-            name: "【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)",
-            shortLabel: "體驗組 (1管)"
+            name: "體驗組",
+            fullName: "【體驗組】不油自主 BÜLIO 油切發泡錠 (1管/14錠)",
+            specText: "1管（共14錠）",
+            badge: "✨ 入門首選",
+            image: "product-1tube.jpg",
+            shortLabel: "體驗組 (1管)",
+            features: [
+                "適合首次入手體驗",
+                "隨身攜帶，無負擔嘗試",
+                "均價 NT$ 1,480 / 管"
+            ]
         },
         popular: {
             normalPrice: 2860,
             couponPrice: 1180,
-            name: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
-            shortLabel: "熱銷組 (2管)"
+            name: "熱銷組",
+            fullName: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
+            specText: "2管（共28錠）",
+            badge: "🔥 熱銷首選",
+            image: "product-2tube.jpg",
+            shortLabel: "熱銷組 (2管)",
+            features: [
+                "日常體態管理首選",
+                "完整週期，解膩油感",
+                "均價 NT$ 1,430 / 管"
+            ]
         },
         stockpile: {
             normalPrice: 8380,
             couponPrice: 3340,
-            name: "【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)",
-            shortLabel: "囤貨組 (6管)"
+            name: "囤貨組",
+            fullName: "【囤貨組】不油自主 BÜLIO 油切發泡錠 (6管/84錠)",
+            specText: "6管（共84錠）",
+            badge: "📦 超值囤貨",
+            image: "product-6tube.jpg",
+            shortLabel: "囤貨組 (6管)",
+            features: [
+                "長效常備，全家分享",
+                "性價比最高，現省最多",
+                "均價 NT$ 1,397 / 管"
+            ]
         }
     };
 
     let isCouponApplied = false;
+    let currentPlanId = 'popular';
 
-    function selectPlan(cardElement) {
-        planCards.forEach(c => c.classList.remove('active'));
-        cardElement.classList.add('active');
-        
-        const planId = cardElement.getAttribute('data-plan');
+    function selectPlan(planId) {
+        currentPlanId = planId;
         const config = planConfigs[planId];
+        if (!config) return;
+
+        // 1. Update spec chips active class
+        specChips.forEach(chip => {
+            if (chip.getAttribute('data-plan') === planId) {
+                chip.classList.add('active');
+            } else {
+                chip.classList.remove('active');
+            }
+        });
+
+        // 2. Update image display with fade animation
+        const mainImg = document.getElementById('main-product-img');
+        if (mainImg) {
+            mainImg.classList.add('switching');
+            setTimeout(() => {
+                mainImg.src = config.image;
+                mainImg.alt = config.fullName;
+                mainImg.classList.remove('switching');
+            }, 150); // Matches transition duration
+        }
+
+        // 3. Update badge & crown
+        const productBadge = document.getElementById('product-badge');
+        if (productBadge) {
+            productBadge.textContent = config.badge;
+            if (planId === 'popular') {
+                productBadge.classList.add('featured-badge');
+            } else {
+                productBadge.classList.remove('featured-badge');
+            }
+        }
+
+        const productCrown = document.getElementById('product-crown');
+        if (productCrown) {
+            productCrown.style.display = (planId === 'popular') ? 'flex' : 'none';
+        }
+
+        // 4. Update texts
+        const planName = document.getElementById('dynamic-plan-name');
+        if (planName) planName.textContent = config.name;
+
+        const planSpec = document.getElementById('dynamic-plan-spec');
+        if (planSpec) planSpec.textContent = config.specText;
+
+        // 5. Update features list
+        const featuresList = document.getElementById('dynamic-features-list');
+        if (featuresList) {
+            featuresList.innerHTML = '';
+            config.features.forEach(feat => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${feat}`;
+                featuresList.appendChild(li);
+            });
+        }
+
+        // 6. Update pricing text
+        const originalPriceEl = document.getElementById('dynamic-original-price');
+        const couponPriceEl = document.getElementById('dynamic-coupon-price');
+
+        if (originalPriceEl) {
+            originalPriceEl.textContent = `NT$ ${config.normalPrice.toLocaleString('en-US')}`;
+        }
+        if (couponPriceEl) {
+            couponPriceEl.setAttribute('data-coupon-price', `NT$ ${config.couponPrice.toLocaleString('en-US')}`);
+            if (isCouponApplied) {
+                couponPriceEl.textContent = `NT$ ${config.couponPrice.toLocaleString('en-US')}`;
+            }
+        }
+
+        // 7. Update sticky bar
         const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
-        const formattedPrice = finalPrice.toLocaleString('en-US');
-        
         if (stickyPlanLabel) stickyPlanLabel.textContent = config.shortLabel;
-        if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${formattedPrice}`;
+        if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${finalPrice.toLocaleString('en-US')}`;
     }
 
     function updateDiscountOverlays() {
@@ -118,28 +212,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Fill in coupon prices from data-coupon-price attribute
-        document.querySelectorAll('.card-coupon-price').forEach(el => {
-            el.textContent = el.getAttribute('data-coupon-price') || '';
-        });
+        const couponPriceEl = document.getElementById('dynamic-coupon-price');
+        if (couponPriceEl) {
+            couponPriceEl.textContent = couponPriceEl.getAttribute('data-coupon-price') || '';
+        }
 
         // Update active card sticky bar price
-        const activeCard = document.querySelector('.plan-card-v2.active');
-        if (activeCard) {
-            selectPlan(activeCard);
-        }
+        selectPlan(currentPlanId);
     }
 
-    // Set click handlers on cards
-    planCards.forEach(card => {
-        card.addEventListener('click', () => {
-            selectPlan(card);
+    // Set click handlers on spec chips
+    specChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const planId = chip.getAttribute('data-plan');
+            selectPlan(planId);
         });
     });
 
-    // Initialize with Featured plan (Popular / index 1)
-    if (planCards.length > 1) {
-        selectPlan(planCards[1]);
+    // Mock checkout button action
+    const checkoutActionBtn = document.getElementById('checkout-action-btn');
+    if (checkoutActionBtn) {
+        checkoutActionBtn.addEventListener('click', () => {
+            const config = planConfigs[currentPlanId];
+            alert(`感謝您的選購！您已選擇：${config.fullName}，正在為您引導至安全結帳頁面...`);
+        });
     }
+
+    // Initialize with Popular plan
+    selectPlan('popular');
 
     // ==========================================================================
     // COUPON CODE HANDLERS
