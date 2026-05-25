@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=2.5">
+    <link rel="stylesheet" href="style.css?v=2.6">
 </head>
 <body>
 
@@ -155,7 +155,16 @@
                             <p class="dynamic-plan-spec" id="dynamic-plan-spec">2管（共28錠）</p>
                         </div>
                         
-                        <!-- 2. Spec Selection (Chips/Pills) -->
+                        <!-- 2. Dynamic Details Features Checklist -->
+                        <div class="dynamic-details-block">
+                            <ul class="dynamic-features-list" id="dynamic-features-list">
+                                <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
+                                <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>
+                                <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,430 / 管</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 3. Spec Selection (Chips/Pills) -->
                         <div class="spec-selector-section">
                             <span class="spec-selector-label">選擇規格組合：</span>
                             <div class="spec-chips-group" id="spec-chips-group">
@@ -167,26 +176,17 @@
                             </div>
                         </div>
                         
-                        <!-- 3. Dynamic Details Features & Qty -->
-                        <div class="dynamic-details-block">
-                            <ul class="dynamic-features-list" id="dynamic-features-list">
-                                <li><i class="fa-solid fa-circle-check"></i> 日常體態管理首選</li>
-                                <li><i class="fa-solid fa-circle-check"></i> 完整週期，解膩油感</li>
-                                <li><i class="fa-solid fa-circle-check"></i> 均價 NT$ 1,430 / 管</li>
-                            </ul>
-                            
-                            <!-- 2.5 Qty Selector -->
-                            <div class="quantity-selector-section">
-                                <span class="quantity-label">選購數量：</span>
-                                <div class="quantity-input-wrap">
-                                    <button type="button" class="qty-btn qty-minus" id="qty-minus-btn" aria-label="減少數量">
-                                        <i class="fa-solid fa-minus"></i>
-                                    </button>
-                                    <input type="number" id="qty-input" value="1" min="1" max="99" readonly>
-                                    <button type="button" class="qty-btn qty-plus" id="qty-plus-btn" aria-label="增加數量">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </button>
-                                </div>
+                        <!-- 4. Qty Selector -->
+                        <div class="quantity-selector-section">
+                            <span class="quantity-label">選購數量：</span>
+                            <div class="quantity-input-wrap">
+                                <button type="button" class="qty-btn qty-minus" id="qty-minus-btn" aria-label="減少數量">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <input type="number" id="qty-input" value="1" min="1" max="99" readonly>
+                                <button type="button" class="qty-btn qty-plus" id="qty-plus-btn" aria-label="增加數量">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                         

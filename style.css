@@ -364,9 +364,11 @@ main {
 
 /* Spec Chips Selector */
 .spec-selector-section {
-    margin-bottom: 22px;
-    border-bottom: 1px solid rgba(212, 77, 50, 0.06);
-    padding-bottom: 16px;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    border-top: 1px dashed rgba(212, 77, 50, 0.1);
+    border-bottom: 1px dashed rgba(212, 77, 50, 0.1);
+    padding: 16px 0;
 }
 
 .spec-selector-label {
@@ -497,9 +499,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px dashed rgba(212, 77, 50, 0.1);
+    margin-top: 14px;
 }
 
 .quantity-label {
