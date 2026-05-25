@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "熱銷組",
             fullName: "【熱銷組】不油自主 BÜLIO 油切發泡錠 (2管/28錠)",
             specText: "2管（共28錠）",
-            badge: "🔥 熱銷首選",
+            badge: '<i class="fa-solid fa-crown"></i> 熱銷首選',
             image: "product-2tube.jpg",
             shortLabel: "熱銷組 (2管)",
             features: [
@@ -147,20 +147,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 150); // Matches transition duration
         }
 
-        // 3. Update badge & crown
+        // 3. Update badge
         const productBadge = document.getElementById('product-badge');
         if (productBadge) {
-            productBadge.textContent = config.badge;
+            productBadge.innerHTML = config.badge;
             if (planId === 'popular') {
                 productBadge.classList.add('featured-badge');
             } else {
                 productBadge.classList.remove('featured-badge');
             }
-        }
-
-        const productCrown = document.getElementById('product-crown');
-        if (productCrown) {
-            productCrown.style.display = (planId === 'popular') ? 'flex' : 'none';
         }
 
         // 4. Update texts
