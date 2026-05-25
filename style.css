@@ -259,7 +259,12 @@ main {
 }
 
 .section-desc {
-    font-size: 0.9re/* ==========================================================================
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    margin-bottom: 24px;
+}
+
+/* ==========================================================================
    PRODUCT SELECTION CARD (SINGLE DYNAMIC SELECTOR)
    ========================================================================== */
 .product-selection-card {
