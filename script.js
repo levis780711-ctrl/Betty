@@ -337,14 +337,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastNames = [
         '陳', '林', '黃', '張', '李', '王', '吳', '劉',
         '蔡', '楊', '許', '鄭', '謝', '郭', '洪', '曾',
-        '邱', '廖', '賴', '周', '徐', '蘇', '葉', '莊'
+        '邱', '廖', '賴', '周', '徐', '蘇', '葉', '莊',
+        '江', '何', '蕭', '羅', '高', '潘', '簡', '朱',
+        '鍾', '彭', '游', '詹', '胡', '施', '沈', '薛',
+        '翁', '盧', '魏', '孫', '顏', '范', '方', '柯',
+        '鄧', '唐', '麥', '戴', '侯', '趙', '石', '姚',
+        '邵', '汪', '田', '康', '姜', '白', '古', '陸'
     ];
 
     const firstNameChars = [
         '萱', '芳', '婷', '雅', '惠', '玲', '怡', '君',
         '蓉', '琪', '庭', '瑜', '欣', '宜', '佳', '真',
         '珊', '筠', '涵', '晴', '霖', '翔', '宇', '傑',
-        '明', '豪', '偉', '志', '文', '威', '軒', '瑋'
+        '明', '豪', '偉', '志', '文', '威', '軒', '瑋',
+        '倫', '廷', '冠', '奕', '宥', '建', '德', '修',
+        '哲', '翰', '瑞', '銘', '達', '宏', '毅', '昇',
+        '安', '如', '美', '芸', '馨', '妤', '婕', '倩',
+        '茹', '茜', '雯', '華', '鈺', '嘉', '均', '平',
+        '凡', '宸', '希', '恩', '悅', '晨', '曦', '語',
+        '菲', '璇', '蕾', '靜', '瑩', '熙', '舒', '霏',
+        '臻', '穎', '琳', '芯', '芃', '蓁', '峰', '凱',
+        '智', '鈞', '睿', '浩', '晟', '愷', '捷', '皓',
+        '揚', '謙', '佑', '宸', '毅', '涵', '希', '彤'
     ];
 
     const plans = [
@@ -355,6 +369,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Weighted random — Popular and Experience appear more often
     const planWeights = [3, 5, 2]; // experience: 30%, popular: 50%, stockpile: 20%
+
+    function shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function getNextFromQueue(queueKey, originalList, isCombinedNames = false) {
+        let stored = sessionStorage.getItem(queueKey);
+        let queue = [];
+        if (stored) {
+            try { queue = JSON.parse(stored); } catch(e) {}
+        }
+        if (!queue || queue.length === 0) {
+            if (isCombinedNames) {
+                const pool = [];
+                for (let i = 0; i < lastNames.length; i++) {
+                    for (let j = 0; j < firstNameChars.length; j++) {
+                        pool.push(`${lastNames[i]}Ｏ${firstNameChars[j]}`);
+                    }
+                }
+                queue = shuffle(pool);
+            } else {
+                queue = shuffle(originalList);
+            }
+        }
+        const nextItem = queue.shift();
+        sessionStorage.setItem(queueKey, JSON.stringify(queue));
+        return nextItem;
+    }
 
     function getWeightedPlan() {
         const totalWeight = planWeights.reduce((a, b) => a + b, 0);
@@ -367,14 +414,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateNotification() {
-        const city = cities[Math.floor(Math.random() * cities.length)];
-        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-        const firstName = firstNameChars[Math.floor(Math.random() * firstNameChars.length)];
+        const city = getNextFromQueue('betty_cities_queue', cities);
+        const buyerName = getNextFromQueue('betty_names_queue', null, true);
         const plan = getWeightedPlan();
         const minutesAgo = Math.floor(Math.random() * 15) + 1;
 
         return {
-            buyer: `${city} ${lastName}Ｏ${firstName}`,
+            buyer: `${city} ${buyerName}`,
             action: `剛剛購買了 <strong>${plan.name}</strong>`,
             time: `${minutesAgo} 分鐘前`
         };
