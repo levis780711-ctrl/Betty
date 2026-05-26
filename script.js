@@ -380,26 +380,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getNextFromQueue(queueKey, originalList, isCombinedNames = false) {
-        let stored = sessionStorage.getItem(queueKey);
+        let stored = null;
+        try {
+            stored = sessionStorage.getItem(queueKey);
+        } catch (e) {
+            console.warn("sessionStorage is not accessible, using memory fallback:", e);
+        }
         let queue = [];
         if (stored) {
             try { queue = JSON.parse(stored); } catch(e) {}
         }
         if (!queue || queue.length === 0) {
-            if (isCombinedNames) {
-                const pool = [];
-                for (let i = 0; i < lastNames.length; i++) {
-                    for (let j = 0; j < firstNameChars.length; j++) {
-                        pool.push(`${lastNames[i]}Ｏ${firstNameChars[j]}`);
-                    }
-                }
-                queue = shuffle(pool);
+            if (!window.bettyMemoryQueues) {
+                window.bettyMemoryQueues = {};
+            }
+            if (window.bettyMemoryQueues[queueKey] && window.bettyMemoryQueues[queueKey].length > 0) {
+                queue = window.bettyMemoryQueues[queueKey];
             } else {
-                queue = shuffle(originalList);
+                if (isCombinedNames) {
+                    const pool = [];
+                    for (let i = 0; i < lastNames.length; i++) {
+                        for (let j = 0; j < firstNameChars.length; j++) {
+                            pool.push(`${lastNames[i]}Ｏ${firstNameChars[j]}`);
+                        }
+                    }
+                    queue = shuffle(pool);
+                } else {
+                    queue = shuffle(originalList);
+                }
+                window.bettyMemoryQueues[queueKey] = queue;
             }
         }
         const nextItem = queue.shift();
-        sessionStorage.setItem(queueKey, JSON.stringify(queue));
+        if (window.bettyMemoryQueues) {
+            window.bettyMemoryQueues[queueKey] = queue;
+        }
+        try {
+            sessionStorage.setItem(queueKey, JSON.stringify(queue));
+        } catch (e) {
+            // Ignore write failures in restricted environments (e.g. file://)
+        }
         return nextItem;
     }
 
