@@ -9,15 +9,65 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
     <link rel="stylesheet" href="style.css?v=2.7">
+
+    <!-- ==========================================
+         Marketing Tracking Scripts (Placeholders)
+         ========================================== -->
+    <!-- Google Analytics (GA4) -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+    
+    <!-- Meta Pixel (Facebook Pixel) -->
+    <!--
+    <script>
+      !f=window.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    </script>
+    -->
+
+    <!-- LINE Tag -->
+    <!--
+    <script>
+      _lt('init', { customerId: 'YOUR_LINE_TAG_ID' });
+      _lt('track', 'PageView');
+    </script>
+    -->
 </head>
 <body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <span>⚡ 限時活動！全台配送免運費 🚚 包裹快速配達 📦</span>
+            <div class="countdown">
+                <span>限時倒數：</span>
+                <span class="time-box" id="hours">00</span> :
+                <span class="time-box" id="minutes">00</span> :
+                <span class="time-box" id="seconds">00</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Header Navigation -->
     <header class="main-header" id="main-header">
@@ -202,9 +252,47 @@
                             <div class="card-price-bar">
                                 <span class="card-original-price" id="dynamic-original-price">NT$ 2,860</span>
                                 <span class="card-coupon-price" id="dynamic-coupon-price" data-coupon-price="NT$ 1,180"></span>
+                                <span class="saving-badge" id="product-saving-badge"></span>
                             </div>
                         </div>
-                        
+
+                        <!-- 付款與配送說明 -->
+                        <div class="checkout-info-box">
+                            <div class="info-row">
+                                <span class="info-icon"><i class="fa-solid fa-credit-card"></i></span>
+                                <span class="info-text">付款方式：信用卡/轉帳</span>
+                                <div class="payment-logos">
+                                    <!-- Visa -->
+                                    <svg class="card-logo visa" viewBox="0 0 24 15" width="26" height="16">
+                                        <rect width="24" height="15" rx="2" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="0.5"/>
+                                        <g transform="translate(1.2, -3.3) scale(0.9)">
+                                            <path d="M9.112 8.262L5.97 15.758H3.92L2.374 9.775c-.094-.368-.175-.503-.461-.658C1.447 8.864.677 8.627 0 8.479l.046-.217h3.3a.904.904 0 01.894.764l.817 4.338 2.018-5.102zm8.033 5.049c.008-1.979-2.736-2.088-2.717-2.972.006-.269.262-.555.822-.628a3.66 3.66 0 011.913.336l.34-1.59a5.207 5.207 0 00-1.814-.333c-1.917 0-3.266 1.02-3.278 2.479-.012 1.079.963 1.68 1.698 2.04.756.367 1.01.603 1.006.931-.005.504-.602.725-1.16.734-.975.015-1.54-.263-1.992-.473l-.351 1.642c.453.208 1.289.39 2.156.398 2.037 0 3.37-1.006 3.377-2.564m5.061 2.447H24l-1.565-7.496h-1.656a.883.883 0 00-.826.55l-2.909 6.946h2.036l.405-1.12h2.488zm-2.163-2.656l1.02-2.815.588 2.815zm-8.16-4.84l-1.603 7.496H8.34l1.605-7.496z" fill="#1A1F71"/>
+                                        </g>
+                                    </svg>
+                                    <!-- Mastercard -->
+                                    <svg class="card-logo mastercard" viewBox="0 0 24 15" width="26" height="16">
+                                        <rect width="24" height="15" rx="2" fill="#0A0A0A"/>
+                                        <circle cx="9.5" cy="7.5" r="5" fill="#EB001B"/>
+                                        <circle cx="14.5" cy="7.5" r="5" fill="#F79E1B" fill-opacity="0.85"/>
+                                    </svg>
+                                    <!-- JCB -->
+                                    <svg class="card-logo jcb" viewBox="0 0 24 15" width="26" height="16">
+                                        <rect width="24" height="15" rx="2" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="0.5"/>
+                                        <rect x="2" y="2.5" width="6" height="10" rx="1" fill="#003580"/>
+                                        <rect x="9" y="2.5" width="6" height="10" rx="1" fill="#D0021B"/>
+                                        <rect x="16" y="2.5" width="6" height="10" rx="1" fill="#008837"/>
+                                        <text x="5" y="9.5" fill="#FFFFFF" font-family="system-ui, sans-serif" font-weight="900" font-size="6" text-anchor="middle">J</text>
+                                        <text x="12" y="9.5" fill="#FFFFFF" font-family="system-ui, sans-serif" font-weight="900" font-size="6" text-anchor="middle">C</text>
+                                        <text x="19" y="9.5" fill="#FFFFFF" font-family="system-ui, sans-serif" font-weight="900" font-size="6" text-anchor="middle">B</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                                <span class="info-text">全台宅配到府</span>
+                            </div>
+                        </div>
+
                         <!-- 4. Single Checkout CTA Button -->
                         <button type="button" class="checkout-action-btn" id="checkout-action-btn">
                             <i class="fa-solid fa-cart-shopping"></i> 立即選購此方案
