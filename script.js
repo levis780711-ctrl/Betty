@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stickyCtaBar = document.getElementById('sticky-cta-bar');
     const stickyPlanLabel = document.getElementById('sticky-plan-label');
     const stickyPriceLabel = document.getElementById('sticky-price-label');
+    const productSavingBadge = document.getElementById('product-saving-badge');
 
     // ==========================================================================
     // MOBILE NAVIGATION
@@ -188,21 +189,48 @@ document.addEventListener('DOMContentLoaded', () => {
         // 6. Update pricing text
         const originalPriceEl = document.getElementById('dynamic-original-price');
         const couponPriceEl = document.getElementById('dynamic-coupon-price');
+        const couponSavings = (config.normalPrice - config.couponPrice) * currentQty;
 
         if (originalPriceEl) {
             originalPriceEl.textContent = `NT$ ${(config.normalPrice * currentQty).toLocaleString('en-US')}`;
+            originalPriceEl.classList.remove('price-bounce-active');
+            void originalPriceEl.offsetWidth; // Force reflow
+            originalPriceEl.classList.add('price-bounce-active');
         }
         if (couponPriceEl) {
             couponPriceEl.setAttribute('data-coupon-price', `NT$ ${(config.couponPrice * currentQty).toLocaleString('en-US')}`);
             if (isCouponApplied) {
                 couponPriceEl.textContent = `NT$ ${(config.couponPrice * currentQty).toLocaleString('en-US')}`;
+                couponPriceEl.classList.remove('price-bounce-active');
+                void couponPriceEl.offsetWidth; // Force reflow
+                couponPriceEl.classList.add('price-bounce-active');
+            } else {
+                couponPriceEl.textContent = '';
             }
+        }
+
+        if (productSavingBadge) {
+            if (isCouponApplied) {
+                productSavingBadge.textContent = `已省 NT$ ${couponSavings.toLocaleString('en-US')}`;
+                productSavingBadge.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            } else {
+                productSavingBadge.textContent = `用碼現省 NT$ ${couponSavings.toLocaleString('en-US')}`;
+                productSavingBadge.style.background = 'linear-gradient(135deg, #ca8a04, #f59e0b)';
+            }
+            productSavingBadge.classList.remove('price-bounce-active');
+            void productSavingBadge.offsetWidth; // Force reflow
+            productSavingBadge.classList.add('price-bounce-active');
         }
 
         // 7. Update sticky bar
         const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
         if (stickyPlanLabel) stickyPlanLabel.textContent = `${config.shortLabel} x ${currentQty}`;
-        if (stickyPriceLabel) stickyPriceLabel.textContent = `NT$ ${(finalPrice * currentQty).toLocaleString('en-US')}`;
+        if (stickyPriceLabel) {
+            stickyPriceLabel.textContent = `NT$ ${(finalPrice * currentQty).toLocaleString('en-US')}`;
+            stickyPriceLabel.classList.remove('price-bounce-active');
+            void stickyPriceLabel.offsetWidth; // Force reflow
+            stickyPriceLabel.classList.add('price-bounce-active');
+        }
     }
 
     function updateDiscountOverlays() {
@@ -219,6 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const couponPriceEl = document.getElementById('dynamic-coupon-price');
         if (couponPriceEl) {
             couponPriceEl.textContent = couponPriceEl.getAttribute('data-coupon-price') || '';
+            couponPriceEl.classList.remove('price-bounce-active');
+            void couponPriceEl.offsetWidth; // Force reflow
+            couponPriceEl.classList.add('price-bounce-active');
         }
 
         // Update active card sticky bar price
@@ -262,6 +293,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutActionBtn) {
         checkoutActionBtn.addEventListener('click', () => {
             const config = planConfigs[currentPlanId];
+            const finalPrice = isCouponApplied ? config.couponPrice : config.normalPrice;
+            const totalAmount = finalPrice * currentQty;
+
+            // Marketing Tracking: InitiateCheckout / AddToCart
+            if (typeof fbq === 'function') {
+                fbq('track', 'InitiateCheckout', {
+                    content_name: config.fullName,
+                    value: totalAmount,
+                    currency: 'TWD'
+                });
+            }
+            if (typeof gtag === 'function') {
+                gtag('event', 'begin_checkout', {
+                    value: totalAmount,
+                    currency: 'TWD',
+                    items: [{
+                        item_name: config.fullName,
+                        quantity: currentQty,
+                        price: finalPrice
+                    }]
+                });
+            }
+
             alert(`感謝您的選購！您已選擇：${config.fullName}，數量：${currentQty} 組，正在為您引導至安全結帳頁面...`);
         });
     }
@@ -312,9 +366,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (promoCodeClick) {
-            promoCodeClick.addEventListener('click', () => {
-                couponInput.value = '000491';
-                applyCouponBtn.click();
+            promoCodeClick.addEventListener('click', (e) => {
+                const couponText = promoCodeClick.textContent.trim();
+                navigator.clipboard.writeText(couponText).then(() => {
+                    couponInput.value = couponText;
+                    applyCouponBtn.click();
+                }).catch(err => {
+                    console.error("Clipboard copy failed: ", err);
+                    couponInput.value = couponText;
+                    applyCouponCode();
+                });
+
+                // Marketing Tracking: Coupon Copy Event
+                if (typeof fbq === 'function') {
+                    fbq('trackCustom', 'CopyCoupon', { coupon_code: couponText });
+                }
+                if (typeof gtag === 'function') {
+                    gtag('event', 'copy_coupon', { coupon_code: couponText });
+                }
+
+                // Create and position tooltip
+                const rect = promoCodeClick.getBoundingClientRect();
+                const tooltip = document.createElement('div');
+                tooltip.className = 'copied-tooltip';
+                tooltip.textContent = '已複製並自動套用！';
+                
+                document.body.appendChild(tooltip);
+
+                const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                tooltip.style.left = (rect.left + rect.width / 2 + scrollLeft) + 'px';
+                tooltip.style.top = (rect.top - 10 + scrollTop - 30) + 'px';
+
+                tooltip.offsetHeight;
+                tooltip.classList.add('show');
+
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    setTimeout(() => {
+                        tooltip.remove();
+                    }, 200);
+                }, 1200);
             });
         }
     }
@@ -535,4 +627,41 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // ==========================================
+    // Countdown Timer Loop
+    // ==========================================
+    const startDailyCountdown = () => {
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        if (!hoursEl || !minutesEl || !secondsEl) return;
+
+        const updateTimer = () => {
+            const now = new Date();
+            const target = new Date();
+            target.setHours(23, 59, 59, 999);
+
+            let diff = target - now;
+
+            if (diff <= 0) {
+                target.setDate(target.getDate() + 1);
+                diff = target - now;
+            }
+
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            hoursEl.textContent = String(hours).padStart(2, '0');
+            minutesEl.textContent = String(minutes).padStart(2, '0');
+            secondsEl.textContent = String(seconds).padStart(2, '0');
+        };
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    };
+
+    startDailyCountdown();
 });
